@@ -1,12 +1,12 @@
 {
   "name": "emotettv",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "files": [
-    "./dist"
+    "dist"
   ],
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc && node scripts/package"
+    "build": "tsc"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.13.0",
