@@ -1,4 +1,4 @@
-type Emote = {
+export type Emote = {
   id: string;
   code: string;
   imageType: string;
@@ -11,14 +11,14 @@ type Emote = {
   };
 };
 
-type globalEmotesResponse = {
+export type globalEmotesResponse = {
   id: string;
   code: string;
   imageType: string;
   userId: string;
 }[];
 
-type channelEmotesResponse = {
+export type channelEmotesResponse = {
   id: string;
   bots: unknown[];
   avatar: string;

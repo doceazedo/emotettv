@@ -1,7 +1,7 @@
 import { EmotePositions, getTwitchEmotes } from '../get-emotes';
 import { emoteFactory, getThirdPartyEmotes } from '../emote-factory';
 
-type Word = {
+export type Word = {
   text: string;
   emote?: {
     url: string[];

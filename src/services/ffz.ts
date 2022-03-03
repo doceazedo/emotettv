@@ -1,4 +1,4 @@
-type emotesResponse = {
+export type emotesResponse = {
   id: number;
   user: {
     id: number;
