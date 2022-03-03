@@ -1,0 +1,14 @@
+{
+  "name": "emotettv",
+  "version": "0.0.1",
+  "files": [
+    "./dist"
+  ],
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc && node scripts/package"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
