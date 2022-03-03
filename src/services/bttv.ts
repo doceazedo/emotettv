@@ -9,7 +9,7 @@ type Emote = {
     displayName: string;
     providerId: string;
   };
-}
+};
 
 type globalEmotesResponse = {
   id: string;
@@ -20,11 +20,11 @@ type globalEmotesResponse = {
 
 type channelEmotesResponse = {
   id: string;
-  bots: any[];
+  bots: unknown[];
   avatar: string;
   channelEmotes: Emote[];
   sharedEmotes: Emote[];
-}
+};
 
 const baseUrl = 'https://api.betterttv.net/3/cached';
 
@@ -32,10 +32,10 @@ export const getGlobalBttvEmotes = async () => {
   const resp = await fetch(`${baseUrl}/emotes/global`);
   const data: globalEmotesResponse = await resp.json();
   return data;
-}
+};
 
 export const getChannelBttvEmotes = async (channelId: string) => {
   const resp = await fetch(`${baseUrl}/users/twitch/${channelId}`);
   const data: channelEmotesResponse = await resp.json();
   return data;
-}
+};

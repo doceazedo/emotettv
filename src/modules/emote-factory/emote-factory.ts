@@ -12,7 +12,7 @@ export const getThirdPartyEmotes = async (channelId: string) => {
   if (bttvEmotes != null && ffzEmotes != null) return;
   bttvEmotes = await getBttvEmotes(channelId);
   ffzEmotes = await getFfzEmotes(channelId);
-}
+};
 
 const twitchEmoteUrl = 'https://static-cdn.jtvnw.net/emoticons/v2';
 const bttvEmoteUrl = 'https://cdn.betterttv.net/emote';
@@ -25,7 +25,7 @@ export const emoteFactory = (twitchEmotes: string[]): EmoteFactory[] => [
       `${twitchEmoteUrl}/${code}/default/dark/1.0`,
       `${twitchEmoteUrl}/${code}/default/dark/2.0`,
       `${twitchEmoteUrl}/${code}/default/dark/3.0`,
-    ]
+    ],
   },
   {
     list: bttvEmotes,
@@ -33,7 +33,7 @@ export const emoteFactory = (twitchEmotes: string[]): EmoteFactory[] => [
       `${bttvEmoteUrl}/${code}/1x`,
       `${bttvEmoteUrl}/${code}/2x`,
       `${bttvEmoteUrl}/${code}/3x`,
-    ]
+    ],
   },
   {
     list: ffzEmotes,
@@ -41,6 +41,6 @@ export const emoteFactory = (twitchEmotes: string[]): EmoteFactory[] => [
       `${ffzEmoteUrl}/${code}/1`,
       `${ffzEmoteUrl}/${code}/2`,
       `${ffzEmoteUrl}/${code}/4`,
-    ]
-  }
+    ],
+  },
 ];

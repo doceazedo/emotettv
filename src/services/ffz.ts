@@ -20,4 +20,4 @@ export const getFfzEmotes = async (channelId: string) => {
   const resp = await fetch(`${baseUrl}/users/twitch/${channelId}`);
   const data: emotesResponse = await resp.json();
   return data;
-}
+};

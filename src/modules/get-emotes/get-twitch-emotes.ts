@@ -1,6 +1,6 @@
 export type EmotePositions = {
   [code: string]: string[];
-}
+};
 
 export const getTwitchEmotes = (message: string, emotes: EmotePositions) => {
   const emotesList: string[] = [];
@@ -14,4 +14,4 @@ export const getTwitchEmotes = (message: string, emotes: EmotePositions) => {
   }
 
   return emotesList;
-}
+};
