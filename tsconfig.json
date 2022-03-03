@@ -6,7 +6,7 @@
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
     "strict": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
@@ -14,7 +14,7 @@
     "noImplicitReturns": true,
     "outDir": "dist",
     "declaration": true,
-    "noImplicitAny": false,
+    "noImplicitAny": false
   },
-  "include": ["src"],
+  "include": ["src"]
 }
