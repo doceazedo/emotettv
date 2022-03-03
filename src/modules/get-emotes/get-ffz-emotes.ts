@@ -1,7 +1,10 @@
 import { getFfzEmotes as getEmotes } from '../../services/ffz';
+import type { Emotes } from './';
 
 export const getFfzEmotes = async (channelId: string) => {
-  const emotes = await getEmotes(channelId);
-  const emoteCodes = emotes.map((emote) => emote.code);
-  return emoteCodes;
+  const emotesData = await getEmotes(channelId);
+
+  const emotes: Emotes = {};
+  emotesData.forEach((item) => (emotes[item.code] = `${item.id}`));
+  return emotes;
 };

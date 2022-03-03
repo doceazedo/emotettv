@@ -1,12 +1,13 @@
 import { getBttvEmotes, getFfzEmotes } from '../get-emotes';
+import { Emotes } from '../get-emotes';
 
 export type EmoteFactory = {
-  list: string[];
+  list: Emotes;
   make: (code: string) => string[];
 };
 
-let bttvEmotes: string[];
-let ffzEmotes: string[];
+let bttvEmotes: Emotes;
+let ffzEmotes: Emotes;
 
 export const getThirdPartyEmotes = async (channelId: string) => {
   if (bttvEmotes != null && ffzEmotes != null) return;
@@ -18,29 +19,29 @@ const twitchEmoteUrl = 'https://static-cdn.jtvnw.net/emoticons/v2';
 const bttvEmoteUrl = 'https://cdn.betterttv.net/emote';
 const ffzEmoteUrl = 'https://cdn.frankerfacez.com/emote';
 
-export const emoteFactory = (twitchEmotes: string[]): EmoteFactory[] => [
+export const emoteFactory = (twitchEmotes: Emotes): EmoteFactory[] => [
   {
     list: twitchEmotes,
     make: (code) => [
-      `${twitchEmoteUrl}/${code}/default/dark/1.0`,
-      `${twitchEmoteUrl}/${code}/default/dark/2.0`,
-      `${twitchEmoteUrl}/${code}/default/dark/3.0`,
+      `${twitchEmoteUrl}/${twitchEmotes[code]}/default/dark/1.0`,
+      `${twitchEmoteUrl}/${twitchEmotes[code]}/default/dark/2.0`,
+      `${twitchEmoteUrl}/${twitchEmotes[code]}/default/dark/3.0`,
     ],
   },
   {
     list: bttvEmotes,
     make: (code) => [
-      `${bttvEmoteUrl}/${code}/1x`,
-      `${bttvEmoteUrl}/${code}/2x`,
-      `${bttvEmoteUrl}/${code}/3x`,
+      `${bttvEmoteUrl}/${bttvEmotes[code]}/1x`,
+      `${bttvEmoteUrl}/${bttvEmotes[code]}/2x`,
+      `${bttvEmoteUrl}/${bttvEmotes[code]}/3x`,
     ],
   },
   {
     list: ffzEmotes,
     make: (code) => [
-      `${ffzEmoteUrl}/${code}/1`,
-      `${ffzEmoteUrl}/${code}/2`,
-      `${ffzEmoteUrl}/${code}/4`,
+      `${ffzEmoteUrl}/${ffzEmotes[code]}/1`,
+      `${ffzEmoteUrl}/${ffzEmotes[code]}/2`,
+      `${ffzEmoteUrl}/${ffzEmotes[code]}/4`,
     ],
   },
 ];

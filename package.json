@@ -1,10 +1,11 @@
 {
   "name": "emotettv",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "files": [
     "dist"
   ],
   "main": "./dist/index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc"
   },

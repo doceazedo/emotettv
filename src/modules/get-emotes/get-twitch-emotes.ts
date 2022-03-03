@@ -1,17 +1,22 @@
+import type { Emotes } from '.';
+
 export type EmotePositions = {
   [code: string]: string[];
 };
 
-export const getTwitchEmotes = (message: string, emotes: EmotePositions) => {
-  const emotesList: string[] = [];
+export const getTwitchEmotes = (
+  message: string,
+  emotesData: EmotePositions
+) => {
+  const emotes: Emotes = {};
 
-  for (const key in emotes) {
-    const pos = emotes[key][0].split('-');
+  for (const id in emotesData) {
+    const pos = emotesData[id][0].split('-');
     const start = parseInt(pos[0]);
     const end = parseInt(pos[1]) + 1;
     const code = message.substring(start, end);
-    emotesList.push(code);
+    emotes[code] = id;
   }
 
-  return emotesList;
+  return emotes;
 };

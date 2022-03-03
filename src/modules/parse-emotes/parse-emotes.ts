@@ -22,7 +22,7 @@ export const parseEmotes = async (
   message.split(' ').forEach((text) => {
     const word: Word = { text };
     factory.forEach((match) => {
-      if (!match.list.includes(text)) return;
+      if (!(text in match.list)) return;
       word.emote = { url: match.make(text) };
     });
     words.push(word);
