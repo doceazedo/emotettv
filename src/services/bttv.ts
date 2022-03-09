@@ -19,9 +19,9 @@ export type GlobalEmotesResponse = {
 }[];
 
 export type ChannelEmotesResponse = {
-  id: string;
-  bots: unknown[];
-  avatar: string;
+  id?: string;
+  bots?: unknown[];
+  avatar?: string;
   channelEmotes: Emote[];
   sharedEmotes: Emote[];
 };
@@ -37,5 +37,10 @@ export const getGlobalBttvEmotes = async () => {
 export const getChannelBttvEmotes = async (channelId: string) => {
   const resp = await fetch(`${baseUrl}/users/twitch/${channelId}`);
   const data: ChannelEmotesResponse = await resp.json();
+  if (!data?.id)
+    return {
+      channelEmotes: [],
+      sharedEmotes: [],
+    };
   return data;
 };
