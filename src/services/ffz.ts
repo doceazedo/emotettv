@@ -1,4 +1,4 @@
-export type emotesResponse = {
+export type EmotesResponse = {
   id: number;
   user: {
     id: number;
@@ -18,6 +18,6 @@ const baseUrl = 'https://api.betterttv.net/3/cached/frankerfacez';
 
 export const getFfzEmotes = async (channelId: string) => {
   const resp = await fetch(`${baseUrl}/users/twitch/${channelId}`);
-  const data: emotesResponse = await resp.json();
+  const data: EmotesResponse = await resp.json();
   return data;
 };
