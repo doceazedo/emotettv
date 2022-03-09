@@ -1,12 +1,6 @@
 import { EmotePositions, getTwitchEmotes } from '../get-emotes';
 import { emoteFactory, getThirdPartyEmotes } from '../emote-factory';
-
-export type Word = {
-  text: string;
-  emote?: {
-    url: string[];
-  };
-};
+import type { Word } from '.';
 
 export const parseEmotes = async (
   message: string,

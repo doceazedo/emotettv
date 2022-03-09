@@ -13,4 +13,8 @@ export type BadgeVersion = {
   last_updated: Date;
 };
 
+export type ParsedBadges = {
+  [code: string]: BadgeVersion;
+};
+
 export * from './parse-badges';

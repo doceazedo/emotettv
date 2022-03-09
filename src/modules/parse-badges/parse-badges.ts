@@ -1,9 +1,5 @@
 import { getBadges } from '../get-badges';
-import type { BadgeVersion, Badges } from '.';
-
-type ParsedBadges = {
-  [code: string]: BadgeVersion;
-};
+import type { Badges, ParsedBadges } from '.';
 
 export const parseBadges = async (badgesData: Badges, channelId: string) => {
   const badges = await getBadges(channelId);

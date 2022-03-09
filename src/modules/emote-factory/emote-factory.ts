@@ -1,10 +1,6 @@
 import { getBttvEmotes, getFfzEmotes } from '../get-emotes';
-import { Emotes } from '../get-emotes';
-
-export type EmoteFactory = {
-  list: Emotes;
-  make: (code: string) => string[];
-};
+import type { EmoteFactory } from '.';
+import type { Emotes } from '../get-emotes';
 
 let bttvEmotes: Emotes;
 let ffzEmotes: Emotes;

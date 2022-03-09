@@ -1,8 +1,4 @@
-import type { Emotes } from '.';
-
-export type EmotePositions = {
-  [code: string]: string[];
-};
+import type { EmotePositions, Emotes } from '.';
 
 export const getTwitchEmotes = (
   message: string,
