@@ -39,9 +39,12 @@ const client = new tmi.Client({
 });
 client.connect();
 
-client.on('message', (channel, tags, message) => {
-  const parsedMessage = await parseEmotes(message, emotes, channelId).toHtml();
-  const parsedBadges = await parseBadges(badges, channelId).toHtml();
+client.on('message', async (channel, tags, message) => {
+  const parsedMessage = await parseEmotes(message, emotes, channelId);
+  const parsedBadges = await parseBadges(badges, channelId);
+  const htmlMessage = parsedMessage.toHtml();
+  const htmlBadges = parsedBadges.toHtml();
+
   document.body.innerHTML += `${parsedBadges} ${tags['display-name']}: ${parsedMessage}`;
 });
 ```
