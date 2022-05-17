@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import { FfzEmotesResponse } from './emotes.types';
 
 const baseUrl = 'https://api.betterttv.net/3/cached/frankerfacez';

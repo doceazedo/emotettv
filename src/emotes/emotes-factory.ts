@@ -20,25 +20,25 @@ export const emotesFactory = async (
     {
       list: twitchEmotes,
       make: (code) => [
-        `${twitchEmoteUrl}/${twitchEmotes[code]}/default/dark/1.0`,
-        `${twitchEmoteUrl}/${twitchEmotes[code]}/default/dark/2.0`,
-        `${twitchEmoteUrl}/${twitchEmotes[code]}/default/dark/3.0`,
+        `${twitchEmoteUrl}/${twitchEmotes.get(code)}/default/dark/1.0`,
+        `${twitchEmoteUrl}/${twitchEmotes.get(code)}/default/dark/2.0`,
+        `${twitchEmoteUrl}/${twitchEmotes.get(code)}/default/dark/3.0`,
       ],
     },
     {
       list: bttvEmotes,
       make: (code) => [
-        `${bttvEmoteUrl}/${bttvEmotes[code]}/1x`,
-        `${bttvEmoteUrl}/${bttvEmotes[code]}/2x`,
-        `${bttvEmoteUrl}/${bttvEmotes[code]}/3x`,
+        `${bttvEmoteUrl}/${bttvEmotes.get(code)}/1x`,
+        `${bttvEmoteUrl}/${bttvEmotes.get(code)}/2x`,
+        `${bttvEmoteUrl}/${bttvEmotes.get(code)}/3x`,
       ],
     },
     {
       list: ffzEmotes,
       make: (code) => [
-        `${ffzEmoteUrl}/${ffzEmotes[code]}/1`,
-        `${ffzEmoteUrl}/${ffzEmotes[code]}/2`,
-        `${ffzEmoteUrl}/${ffzEmotes[code]}/4`,
+        `${ffzEmoteUrl}/${ffzEmotes.get(code)}/1`,
+        `${ffzEmoteUrl}/${ffzEmotes.get(code)}/2`,
+        `${ffzEmoteUrl}/${ffzEmotes.get(code)}/4`,
       ],
     },
   ];

@@ -16,17 +16,14 @@ export const parseEmotes = async (
   channelId: string
 ) => {
   const factory = await emotesFactory(message, emotes, channelId);
-  const words: Word[] = message
-    .split(' ')
-    .map((text) => {
-      const word: Word = { text };
-      factory.forEach((match) => {
-        if (!(text in match.list)) return;
-        word.emote = { url: match.make(text) };
-      });
-      return word;
-    })
-    .filter((word) => !!word);
+  const words: Word[] = message.split(' ').map((text) => {
+    const word: Word = { text };
+    factory.forEach((match) => {
+      if (!match.list.has(text)) return;
+      word.emote = { url: match.make(text) };
+    });
+    return word;
+  });
 
   return {
     toWords: () => words,
