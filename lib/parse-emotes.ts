@@ -5,7 +5,7 @@ const toHtml = (words: Word[], size: number) =>
   words
     .map((word) =>
       word.emote
-        ? `<img src="${word.emote.url[size]}" alt="HeyGuys" />`
+        ? `<img src="${word.emote.url[size]}" alt="${word.text}" />`
         : word.text
     )
     .join(' ');
