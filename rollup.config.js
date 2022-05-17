@@ -7,7 +7,7 @@ import del from 'rollup-plugin-delete';
 import { module, main } from './package.json';
 
 export default {
-  input: 'src/index.ts',
+  input: 'lib/index.ts',
   output: [
     {
       file: main,
@@ -27,4 +27,5 @@ export default {
     terser(),
     typescript(),
   ],
+  external: ['cross-fetch'],
 };

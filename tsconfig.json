@@ -16,5 +16,5 @@
     "declaration": true,
     "noImplicitAny": false
   },
-  "include": ["src"]
+  "include": ["lib"]
 }

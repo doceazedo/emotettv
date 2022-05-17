@@ -23,35 +23,78 @@ yarn add emotettv
 ```
 
 ```js
-import { parseBadges, parseEmotes, ... } from 'emotettv';
+import { parseBadges, parseEmotes } from 'emotettv';
 ```
 
-## Usage
+## Basic usage
 
 **🚨 Remember to always sanitize user messages! If your frontend library doesn't do that for you, I recommend using [DOMPurify](https://github.com/cure53/DOMPurify).**
 
-### parseEmotes(...)
+```js
+import tmi from 'tmi.js';
+import { parseBadges, parseEmotes } from 'emotettv';
 
-Returns the initial message as an array of words and emotes.
+const client = new tmi.Client({
+  channels: ['doceazedo911'],
+});
+client.connect();
+
+client.on('message', (channel, tags, message) => {
+  const parsedMessage = await parseEmotes(message, emotes, channelId).toHtml();
+  const parsedBadges = await parseBadges(badges, channelId).toHtml();
+  document.body.innerHTML += `${parsedBadges} ${tags['display-name']}: ${parsedMessage}`;
+});
+```
+
+## Methods
+
+### parseEmotes(...)
 
 **Parameters**
 
-- message `string` - Message string to parse
-- emotes [`EmotePositions`](/src/modules/get-emotes/index.ts#L5) - List of emote positions, like tmi.js `tags.emotes`
-- channelId `string` - Twitch ID of the channel the message is from
+- message: Message string to parse
+- emotes: List of emote positions, like tmi.js [`tags.emotes`](/src/badges/badges.types.ts#L1)
+- channelId: Twitch ID of the channel the message is from
 
-**Returns**: Promise<[`Word[]`](/src/modules/parse-emotes/index.ts#L1)>
+```js
+const parsed = await parseEmotes(message, emotes, channelId);
+
+const html = parsed.toHtml();
+// hello world! <img src="..." alt="VoHiYo" />
+
+const words = parsed.toWords();
+// [
+//   { text: 'hello' },
+//   { text: 'world!' },
+//   { text: 'VoHiYo', emote: { url: ['1x', '2x', '3x'] } }
+// ]
+```
 
 ### parseBadges(...)
 
-Returns an object with the user badges
-
 **Parameters**
 
-- badgesData [`Badges`](/src/modules/parse-badges/index.ts#L1) - List of the user badges, like tmi.js `tags.badges`
-- channelId `string` - Twitch ID of the channel the message is from
+- badgesData: List of the user badges, like tmi.js [`tags.badges`](/src/badges/badges.types.ts#L28)
+- channelId: Twitch ID of the channel the message is from
 
-**Returns**: Promise<[`ParsedBadges`](/src/modules/parse-badges/index.ts#L16)>
+```js
+const parsed = await parseBadges(badges, channelId);
+
+const html = parsed.toHtml();
+// <img src="..." alt="premium" /> <img src="..." alt="subscriber" />
+
+const minimal = parsed.toMinimalArray();
+// [
+//   [ '1x', '2x', '4x' ],
+//   [ '1x', '2x', '4x' ]
+// ]
+
+const basic = parsed.toBasicArray();
+// [
+//   { ... },
+//   { ... },
+// ]
+```
 
 ## Building
 
