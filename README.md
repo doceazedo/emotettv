@@ -12,7 +12,7 @@
 
 ## Demo
 
-Checkout this Svelte [demo app](https://svelte.dev/repl/9b8bd1e644814acb85c1a3ecf439eab5?version=3.46.4) to see emoteTTV in action ⛹️
+Checkout this [demo app](https://codesandbox.io/s/6efhse?file=/src/index.js) to see emoteTTV in action ⛹️
 
 ## Installation
 
@@ -34,18 +34,19 @@ import { parseBadges, parseEmotes } from 'emotettv';
 import tmi from 'tmi.js';
 import { parseBadges, parseEmotes } from 'emotettv';
 
+const channelId = '98776633';
 const client = new tmi.Client({
   channels: ['doceazedo911'],
 });
 client.connect();
 
 client.on('message', async (channel, tags, message) => {
-  const parsedMessage = await parseEmotes(message, emotes, channelId);
-  const parsedBadges = await parseBadges(badges, channelId);
+  const parsedMessage = await parseEmotes(message, tags.emotes, channelId);
+  const parsedBadges = await parseBadges(tags.badges, channelId);
   const htmlMessage = parsedMessage.toHtml();
   const htmlBadges = parsedBadges.toHtml();
 
-  document.body.innerHTML += `${parsedBadges} ${tags['display-name']}: ${parsedMessage}`;
+  document.body.innerHTML += `${htmlBadges} ${tags['display-name']}: ${htmlMessage}`;
 });
 ```
 
