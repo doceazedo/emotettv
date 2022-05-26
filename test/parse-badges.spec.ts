@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { parseBadges } from '../lib';
+import { parseBadges } from '../src';
 import { msgWithTwitchEmotes } from './fixtures/messages';
 
 const getParsedBadges = async () =>

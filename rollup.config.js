@@ -7,7 +7,7 @@ import del from 'rollup-plugin-delete';
 import { module, main } from './package.json';
 
 export default {
-  input: 'lib/index.ts',
+  input: 'src/index.ts',
   output: [
     {
       file: main,

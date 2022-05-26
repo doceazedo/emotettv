@@ -1,5 +1,5 @@
-import { emotesFactory } from '../src/emotes/emotes-factory';
-import { EmotePositions, Word } from '../src/emotes/emotes.types';
+import { emotesFactory } from '../emotes/emotes-factory';
+import { EmotePositions, Word } from '../emotes/emotes.types';
 
 const toHtml = (words: Word[], size: number) =>
   words

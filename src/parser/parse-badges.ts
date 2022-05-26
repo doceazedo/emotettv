@@ -1,5 +1,5 @@
-import { getBadges } from '../src/badges/badges.store';
-import { BadgeIDs, BadgeVersion } from '../src/badges/badges.types';
+import { getBadges } from '../badges/badges.store';
+import { BadgeIDs, BadgeVersion } from '../badges/badges.types';
 
 const toMinimalArray = (versions: BadgeVersion[]): string[][] =>
   versions.map((version) => [
