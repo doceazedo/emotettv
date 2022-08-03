@@ -1,7 +1,11 @@
 import * as cheerio from 'cheerio';
 import { parseEmotes } from '../src';
 import { customEmotesFactory } from './fixtures/factories';
-import { msgWithCustomEmotes, msgWithTwitchEmotes } from './fixtures/messages';
+import {
+  msgWithCustomEmotes,
+  msgWithThirdPartyEmotes,
+  msgWithTwitchEmotes,
+} from './fixtures/messages';
 
 const getTwitchEmotesMsg = async () =>
   await parseEmotes(
@@ -9,6 +13,19 @@ const getTwitchEmotesMsg = async () =>
     msgWithTwitchEmotes.tags.emotes,
     {
       channelId: msgWithTwitchEmotes.channelId,
+    }
+  );
+
+const getThirdPartyEmotesMsg = async (enableThirdPartyProviders = true) =>
+  await parseEmotes(
+    msgWithThirdPartyEmotes.message,
+    msgWithThirdPartyEmotes.tags.emotes,
+    {
+      channelId: msgWithThirdPartyEmotes.channelId,
+      thirdPartyProviders: {
+        bttv: enableThirdPartyProviders,
+        ffz: enableThirdPartyProviders,
+      },
     }
   );
 
@@ -38,6 +55,22 @@ describe('parse twitch emotes', () => {
     const words = parsed.toWords();
     const emotesCount = words.filter((word) => !!word.emote).length;
     expect(emotesCount).toBe(2);
+  });
+});
+
+describe('parse third party emotes', () => {
+  it('should parse message to words', async () => {
+    const parsed = await getThirdPartyEmotesMsg();
+    const words = parsed.toWords();
+    const emotesCount = words.filter((word) => !!word.emote).length;
+    expect(emotesCount).toBe(2);
+  });
+
+  it('should parse message to words with no emotes', async () => {
+    const parsed = await getThirdPartyEmotesMsg(false);
+    const words = parsed.toWords();
+    const emotesCount = words.filter((word) => !!word.emote).length;
+    expect(emotesCount).toBe(0);
   });
 });
 

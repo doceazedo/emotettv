@@ -32,3 +32,8 @@ export const msgWithCustomEmotes: MessageFixture = {
   },
   channelId,
 };
+
+export const msgWithThirdPartyEmotes = {
+  ...msgWithCustomEmotes,
+  message: 'hello world! catJAM KEKW',
+};
