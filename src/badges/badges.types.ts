@@ -28,3 +28,7 @@ export type ChannelBadges = Map<string, BadgeVersions>;
 export type BadgeIDs = {
   [code: string]: string;
 };
+
+export type ParseBadgesOptions = {
+  channelId?: string;
+};

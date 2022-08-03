@@ -3,10 +3,9 @@ import { parseBadges } from '../src';
 import { msgWithTwitchEmotes } from './fixtures/messages';
 
 const getParsedBadges = async () =>
-  await parseBadges(
-    msgWithTwitchEmotes.tags.badges,
-    msgWithTwitchEmotes.channelId
-  );
+  await parseBadges(msgWithTwitchEmotes.tags.badges, {
+    channelId: msgWithTwitchEmotes.channelId,
+  });
 
 describe('parse twitch badges', () => {
   it('should parse badges to basic array', async () => {

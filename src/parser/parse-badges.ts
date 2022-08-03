@@ -1,5 +1,11 @@
 import { getBadges } from '../badges/badges.store';
-import { BadgeIDs, BadgeVersion } from '../badges/badges.types';
+import {
+  BadgeIDs,
+  BadgeVersion,
+  ParseBadgesOptions,
+} from '../badges/badges.types';
+
+const defaultOptions: ParseBadgesOptions = {};
 
 const toMinimalArray = (versions: BadgeVersion[]): string[][] =>
   versions.map((version) => [
@@ -20,8 +26,13 @@ const toHtml = (versions: BadgeVersion[], size: number) => {
     .join(' ');
 };
 
-export const parseBadges = async (badges: BadgeIDs, channelId: string) => {
-  const badgeVersions = await getBadges(channelId);
+export const parseBadges = async (
+  badges: BadgeIDs,
+  options?: Partial<ParseBadgesOptions>
+) => {
+  const _options: ParseBadgesOptions = { ...defaultOptions, ...options };
+
+  const badgeVersions = await getBadges(_options.channelId);
   const userBadges: BadgeVersion[] = [];
 
   for (const code in badges) {

@@ -1,4 +1,4 @@
-import { GLOBAL_EMOTES_KEY } from '../helpers';
+import { GLOBAL_CHANNEL_KEY } from '../helpers';
 import {
   fetchGlobalBttvEmotes,
   fetchChannelBttvEmotes,
@@ -11,7 +11,7 @@ export const getBttvEmotes = async (channelId?: string, enabled = true) => {
   const emotes: EmoteIDs = new Map();
   if (!enabled) return emotes;
 
-  const emotesKey = channelId || GLOBAL_EMOTES_KEY;
+  const emotesKey = channelId || GLOBAL_CHANNEL_KEY;
   const channelEmotes = channelEmotesStore.get(emotesKey);
   if (channelEmotes) return channelEmotes;
 
