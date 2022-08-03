@@ -63,10 +63,10 @@ export type Word = {
 };
 
 export type ParseEmotesOptions = {
-  channelId: string;
+  channelId?: string;
   thirdPartyProviders: {
     bttv: boolean;
     ffz: boolean;
   };
-  customEmotes?: EmotesFactory | EmotesFactory[];
+  customEmotes: EmotesFactory | EmotesFactory[];
 };

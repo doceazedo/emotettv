@@ -18,3 +18,17 @@ export const msgWithTwitchEmotes: MessageFixture = {
   },
   channelId,
 };
+
+export const msgWithCustomEmotes: MessageFixture = {
+  message: 'text customEmote anotherCustomEmote',
+  tags: {
+    // TODO: custom badges
+    badges: {
+      broadcaster: '1',
+      premium: '1',
+      subscriber: '9',
+    },
+    emotes: null,
+  },
+  channelId,
+};

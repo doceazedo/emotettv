@@ -1,28 +1,33 @@
+import { GLOBAL_EMOTES_KEY } from '../helpers';
 import {
   fetchGlobalBttvEmotes,
   fetchChannelBttvEmotes,
 } from './emotes-bttv.client';
-import { ChannelEmotes, EmoteIDs } from './emotes.types';
+import { BttvEmote, ChannelEmotes, EmoteIDs } from './emotes.types';
 
 const channelEmotesStore: ChannelEmotes = new Map();
 
-export const getBttvEmotes = async (channelId: string, enabled: boolean) => {
+export const getBttvEmotes = async (channelId?: string, enabled = true) => {
   const emotes: EmoteIDs = new Map();
   if (!enabled) return emotes;
 
-  const channelEmotes = channelEmotesStore.get(channelId);
+  const emotesKey = channelId || GLOBAL_EMOTES_KEY;
+  const channelEmotes = channelEmotesStore.get(emotesKey);
   if (channelEmotes) return channelEmotes;
 
   const global = await fetchGlobalBttvEmotes();
-  const channel = await fetchChannelBttvEmotes(channelId);
-  const bttvEmotes = [
-    ...global,
-    ...channel.channelEmotes,
-    ...channel.sharedEmotes,
-  ];
+  let bttvEmotes: BttvEmote[] = [...global];
+  if (channelId) {
+    const channel = await fetchChannelBttvEmotes(channelId);
+    bttvEmotes = [
+      ...bttvEmotes,
+      ...channel.sharedEmotes,
+      ...channel.channelEmotes,
+    ];
+  }
 
   bttvEmotes.forEach((emote) => emotes.set(emote.code, emote.id));
-  channelEmotesStore.set(channelId, emotes);
+  channelEmotesStore.set(emotesKey, emotes);
 
   return emotes;
 };

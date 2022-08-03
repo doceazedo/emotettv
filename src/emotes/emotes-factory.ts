@@ -13,23 +13,32 @@ const ffzEmoteUrl = 'https://cdn.frankerfacez.com/emote';
 
 export const emotesFactory = async (
   message: string,
-  emotes: EmotePositions,
-  config: ParseEmotesOptions
+  emotePositions: EmotePositions | null,
+  options: ParseEmotesOptions
 ): Promise<EmotesFactory[]> => {
-  const twitchEmotes = await getTwitchEmotesFromMessage(message, emotes);
+  const twitchEmotes = await getTwitchEmotesFromMessage(
+    message,
+    emotePositions
+  );
   const bttvEmotes = await getBttvEmotes(
-    config.channelId,
-    config.thirdPartyProviders.bttv
+    options.channelId,
+    options.thirdPartyProviders.bttv
   );
   const ffzEmotes = await getFfzEmotes(
-    config.channelId,
-    config.thirdPartyProviders.ffz
+    options.channelId,
+    options.thirdPartyProviders.ffz
   );
+
+  const customFactories = Array.isArray(options.customEmotes)
+    ? options.customEmotes
+    : [options.customEmotes];
 
   return [
     {
       list: twitchEmotes,
       make: (code) => [
+        // TODO: who allowed me to get the same fucking value 3 times
+        // do something like test/fixtures/factories.ts
         `${twitchEmoteUrl}/${twitchEmotes.get(code)}/default/dark/1.0`,
         `${twitchEmoteUrl}/${twitchEmotes.get(code)}/default/dark/2.0`,
         `${twitchEmoteUrl}/${twitchEmotes.get(code)}/default/dark/3.0`,
@@ -38,6 +47,8 @@ export const emotesFactory = async (
     {
       list: bttvEmotes,
       make: (code) => [
+        // TODO: who allowed me to get the same fucking value 3 times
+        // do something like test/fixtures/factories.ts
         `${bttvEmoteUrl}/${bttvEmotes.get(code)}/1x`,
         `${bttvEmoteUrl}/${bttvEmotes.get(code)}/2x`,
         `${bttvEmoteUrl}/${bttvEmotes.get(code)}/3x`,
@@ -46,10 +57,13 @@ export const emotesFactory = async (
     {
       list: ffzEmotes,
       make: (code) => [
+        // TODO: who allowed me to get the same fucking value 3 times
+        // do something like test/fixtures/factories.ts
         `${ffzEmoteUrl}/${ffzEmotes.get(code)}/1`,
         `${ffzEmoteUrl}/${ffzEmotes.get(code)}/2`,
         `${ffzEmoteUrl}/${ffzEmotes.get(code)}/4`,
       ],
     },
+    ...customFactories,
   ];
 };

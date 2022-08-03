@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import { parseEmotes } from '../src';
-import { msgWithTwitchEmotes } from './fixtures/messages';
+import { customEmotesFactory } from './fixtures/factories';
+import { msgWithCustomEmotes, msgWithTwitchEmotes } from './fixtures/messages';
 
 const getTwitchEmotesMsg = async () =>
   await parseEmotes(
@@ -10,6 +11,11 @@ const getTwitchEmotesMsg = async () =>
       channelId: msgWithTwitchEmotes.channelId,
     }
   );
+
+const getCustomEmotesMsg = async () =>
+  await parseEmotes(msgWithCustomEmotes.message, null, {
+    customEmotes: customEmotesFactory,
+  });
 
 describe('parse twitch emotes', () => {
   it('should parse message to words', async () => {
@@ -25,6 +31,13 @@ describe('parse twitch emotes', () => {
     const $ = cheerio.load(html);
     const emotesCount = $('img').length;
     expect(emotesCount).toBe(1);
+  });
+
+  it('should parse message with custom emotes', async () => {
+    const parsed = await getCustomEmotesMsg();
+    const words = parsed.toWords();
+    const emotesCount = words.filter((word) => !!word.emote).length;
+    expect(emotesCount).toBe(2);
   });
 });
 

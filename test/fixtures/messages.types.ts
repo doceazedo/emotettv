@@ -8,7 +8,7 @@ export type MessageFixture = {
   message: string;
   tags: {
     badges: badgeIDs;
-    emotes: EmotePositions;
+    emotes: EmotePositions | null;
   };
   channelId: string;
 };

@@ -3,9 +3,9 @@ import { ChannelEmotes, EmoteIDs } from './emotes.types';
 
 const channelEmotesStore: ChannelEmotes = new Map();
 
-export const getFfzEmotes = async (channelId: string, enabled: boolean) => {
+export const getFfzEmotes = async (channelId?: string, enabled = true) => {
   const emotes: EmoteIDs = new Map();
-  if (!enabled) return emotes;
+  if (!enabled || !channelId) return emotes;
 
   const channelEmotes = channelEmotesStore.get(channelId);
   if (channelEmotes) return channelEmotes;

@@ -6,11 +6,11 @@ import {
 } from '../emotes/emotes.types';
 
 const defaultOptions: ParseEmotesOptions = {
-  channelId: 'justinfan',
   thirdPartyProviders: {
     bttv: true,
     ffz: true,
   },
+  customEmotes: [],
 };
 
 const toHtml = (words: Word[], size: number) =>
@@ -24,12 +24,12 @@ const toHtml = (words: Word[], size: number) =>
 
 export const parseEmotes = async (
   message: string,
-  emotes: EmotePositions,
+  emotePositions: EmotePositions | null = null,
   options?: Partial<ParseEmotesOptions>
 ) => {
   const _options: ParseEmotesOptions = { ...defaultOptions, ...options };
 
-  const factory = await emotesFactory(message, emotes, _options);
+  const factory = await emotesFactory(message, emotePositions, _options);
   const words: Word[] = message.split(' ').map((text) => {
     const word: Word = { text };
     factory.forEach((match) => {
