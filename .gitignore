@@ -17,3 +17,4 @@ dist-ssr
 *.sln
 *.sw?
 yarn.lock
+.eslintcache
