@@ -18,14 +18,14 @@ const toHtml = (words: Word[], size: number) =>
     .map((word) =>
       word.emote
         ? `<img src="${word.emote.url[size]}" alt="${word.text}" />`
-        : word.text
+        : word.text,
     )
     .join(' ');
 
 export const parseEmotes = async (
   message: string,
   emotePositions: EmotePositions | null = null,
-  options?: Partial<ParseEmotesOptions>
+  options?: Partial<ParseEmotesOptions>,
 ) => {
   const _options: ParseEmotesOptions = { ...defaultOptions, ...options };
 

@@ -2,7 +2,7 @@ import { EmoteIDs, EmotePositions } from './emotes.types';
 
 export const getTwitchEmotesFromMessage = async (
   message: string,
-  emotePositions: EmotePositions | null
+  emotePositions: EmotePositions | null,
 ) => {
   const emotesMap: EmoteIDs = new Map();
   if (!emotePositions) return emotesMap;

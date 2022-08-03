@@ -18,7 +18,7 @@ describe('parse twitch badges', () => {
         !!badge.image_url_4x &&
         !!badge.description &&
         !!badge.title &&
-        !!badge.click_action
+        !!badge.click_action,
     );
     expect(isValidArr).toBeTruthy();
   });

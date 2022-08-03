@@ -21,14 +21,14 @@ const toHtml = (versions: BadgeVersion[], size: number) => {
   return versions
     .map(
       (version) =>
-        `<img src="${version[`image_url_${size}x`]}" alt="${version.title}" />`
+        `<img src="${version[`image_url_${size}x`]}" alt="${version.title}" />`,
     )
     .join(' ');
 };
 
 export const parseBadges = async (
   badges: BadgeIDs,
-  options?: Partial<ParseBadgesOptions>
+  options?: Partial<ParseBadgesOptions>,
 ) => {
   const _options: ParseBadgesOptions = { ...defaultOptions, ...options };
 

@@ -14,19 +14,19 @@ const ffzEmoteUrl = 'https://cdn.frankerfacez.com/emote';
 export const emotesFactory = async (
   message: string,
   emotePositions: EmotePositions | null,
-  options: ParseEmotesOptions
+  options: ParseEmotesOptions,
 ): Promise<EmotesFactory[]> => {
   const twitchEmotes = await getTwitchEmotesFromMessage(
     message,
-    emotePositions
+    emotePositions,
   );
   const bttvEmotes = await getBttvEmotes(
     options.channelId,
-    options.thirdPartyProviders.bttv
+    options.thirdPartyProviders.bttv,
   );
   const ffzEmotes = await getFfzEmotes(
     options.channelId,
-    options.thirdPartyProviders.ffz
+    options.thirdPartyProviders.ffz,
   );
 
   const customFactories = Array.isArray(options.customEmotes)

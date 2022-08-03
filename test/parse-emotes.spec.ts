@@ -13,7 +13,7 @@ const getTwitchEmotesMsg = async () =>
     msgWithTwitchEmotes.tags.emotes,
     {
       channelId: msgWithTwitchEmotes.channelId,
-    }
+    },
   );
 
 const getThirdPartyEmotesMsg = async (enableThirdPartyProviders = true) =>
@@ -26,7 +26,7 @@ const getThirdPartyEmotesMsg = async (enableThirdPartyProviders = true) =>
         bttv: enableThirdPartyProviders,
         ffz: enableThirdPartyProviders,
       },
-    }
+    },
   );
 
 const getCustomEmotesMsg = async () =>
