@@ -1,4 +1,4 @@
-<h1>emoteTTV <img src="https://i.imgur.com/7zlS0zX.gif" height="34" align="right"></h1>
+<h1>emoteTTV <img src="https://i.imgur.com/Qgc9fJ4.gif" height="34" align="right"></h1>
 
 [![npm](https://badgen.net/npm/v/emotettv)](https://www.npmjs.com/package/emotettv)
 [![install size](https://badgen.net/packagephobia/install/emotettv)](https://packagephobia.com/result?p=emotettv)
