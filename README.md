@@ -10,6 +10,8 @@
 - <img src="https://static-cdn.jtvnw.net/emoticons/v2/81274/default/dark/1.0" height="28" align="left"> Dead simple API - works seamlessly with <a href="https://github.com/tmijs/tmi.js">TMI.js</a>
 - <img src="https://static-cdn.jtvnw.net/emoticons/v2/304486301/default/dark/1.0" height="28" align="left"> Flexible results to fit every need
 
+> ### ⚠ This is still in development, breaking changes and bugs are expected until the 1.0.0 release.
+
 ## Demo
 
 Checkout this [demo app](https://codesandbox.io/s/6efhse?file=/src/index.js) to see emoteTTV in action ⛹️
@@ -40,9 +42,13 @@ const client = new tmi.Client({
 });
 client.connect();
 
+const options = {
+  channelId,
+};
+
 client.on('message', async (channel, tags, message) => {
-  const parsedMessage = await parseEmotes(message, tags.emotes, channelId);
-  const parsedBadges = await parseBadges(tags.badges, channelId);
+  const parsedMessage = await parseEmotes(message, tags.emotes, options);
+  const parsedBadges = await parseBadges(tags.badges, options);
   const htmlMessage = parsedMessage.toHtml();
   const htmlBadges = parsedBadges.toHtml();
 
@@ -58,10 +64,27 @@ client.on('message', async (channel, tags, message) => {
 
 - message: Message string to parse
 - emotes: List of emote positions, like tmi.js [`tags.emotes`](/src/badges/badges.types.ts#L1)
-- channelId: Twitch ID of the channel the message is from
+- options: Optional parser settings
+  ```js
+  {
+    channelId: '', // Twitch ID of the channel the message is from
+    thirdPartyProviders: {
+      bttv: true, // Parse BTTV emotes
+      ffz: true, // Parse FFZ emotes
+    };
+    customEmotes: {
+      list: new Map(); // Map of <emote code, emote ID>
+      make: (code) => []; // Function that returns array of emote URLs
+    },
+  }
+  ```
+
+**Usage**
 
 ```js
-const parsed = await parseEmotes(message, emotes, channelId);
+const parsed = await parseEmotes(message, emotes, {
+  channelId: '98776633',
+});
 
 const html = parsed.toHtml();
 // hello world! <img src="..." alt="VoHiYo" />
@@ -79,10 +102,19 @@ const words = parsed.toWords();
 **Parameters**
 
 - badgesData: List of the user badges, like tmi.js [`tags.badges`](/src/badges/badges.types.ts#L28)
-- channelId: Twitch ID of the channel the message is from
+- options: Optional parser settings
+  ```js
+  {
+    channelId: '', // Twitch ID of the channel the message is from
+  }
+  ```
+
+**Usage**
 
 ```js
-const parsed = await parseBadges(badges, channelId);
+const parsed = await parseBadges(badges, {
+  channelId: '98776633',
+});
 
 const html = parsed.toHtml();
 // <img src="..." alt="premium" /> <img src="..." alt="subscriber" />
