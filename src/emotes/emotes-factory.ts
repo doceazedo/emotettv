@@ -1,7 +1,11 @@
 import { getBttvEmotes } from './emotes-bttv.store';
 import { getFfzEmotes } from './emotes-ffz.store';
 import { getTwitchEmotesFromMessage } from './emotes-twitch.store';
-import { EmotesFactory, EmotePositions } from './emotes.types';
+import {
+  EmotesFactory,
+  EmotePositions,
+  ParseEmotesOptions,
+} from './emotes.types';
 
 const twitchEmoteUrl = 'https://static-cdn.jtvnw.net/emoticons/v2';
 const bttvEmoteUrl = 'https://cdn.betterttv.net/emote';
@@ -10,11 +14,17 @@ const ffzEmoteUrl = 'https://cdn.frankerfacez.com/emote';
 export const emotesFactory = async (
   message: string,
   emotes: EmotePositions,
-  channelId: string
+  config: ParseEmotesOptions
 ): Promise<EmotesFactory[]> => {
   const twitchEmotes = await getTwitchEmotesFromMessage(message, emotes);
-  const bttvEmotes = await getBttvEmotes(channelId);
-  const ffzEmotes = await getFfzEmotes(channelId);
+  const bttvEmotes = await getBttvEmotes(
+    config.channelId,
+    config.thirdPartyProviders.bttv
+  );
+  const ffzEmotes = await getFfzEmotes(
+    config.channelId,
+    config.thirdPartyProviders.ffz
+  );
 
   return [
     {

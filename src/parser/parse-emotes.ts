@@ -1,5 +1,17 @@
 import { emotesFactory } from '../emotes/emotes-factory';
-import { EmotePositions, Word } from '../emotes/emotes.types';
+import {
+  EmotePositions,
+  ParseEmotesOptions,
+  Word,
+} from '../emotes/emotes.types';
+
+const defaultOptions: ParseEmotesOptions = {
+  channelId: 'justinfan',
+  thirdPartyProviders: {
+    bttv: true,
+    ffz: true,
+  },
+};
 
 const toHtml = (words: Word[], size: number) =>
   words
@@ -13,9 +25,11 @@ const toHtml = (words: Word[], size: number) =>
 export const parseEmotes = async (
   message: string,
   emotes: EmotePositions,
-  channelId: string
+  options?: Partial<ParseEmotesOptions>
 ) => {
-  const factory = await emotesFactory(message, emotes, channelId);
+  const _options: ParseEmotesOptions = { ...defaultOptions, ...options };
+
+  const factory = await emotesFactory(message, emotes, _options);
   const words: Word[] = message.split(' ').map((text) => {
     const word: Word = { text };
     factory.forEach((match) => {

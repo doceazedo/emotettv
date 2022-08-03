@@ -6,7 +6,9 @@ const getTwitchEmotesMsg = async () =>
   await parseEmotes(
     msgWithTwitchEmotes.message,
     msgWithTwitchEmotes.tags.emotes,
-    msgWithTwitchEmotes.channelId
+    {
+      channelId: msgWithTwitchEmotes.channelId,
+    }
   );
 
 describe('parse twitch emotes', () => {
@@ -25,3 +27,6 @@ describe('parse twitch emotes', () => {
     expect(emotesCount).toBe(1);
   });
 });
+
+// TODO: test parser without channelId
+// TODO: write more/better tests in general

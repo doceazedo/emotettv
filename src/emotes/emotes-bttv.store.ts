@@ -6,7 +6,10 @@ import { ChannelEmotes, EmoteIDs } from './emotes.types';
 
 const channelEmotesStore: ChannelEmotes = new Map();
 
-export const getBttvEmotes = async (channelId: string) => {
+export const getBttvEmotes = async (channelId: string, enabled: boolean) => {
+  const emotes: EmoteIDs = new Map();
+  if (!enabled) return emotes;
+
   const channelEmotes = channelEmotesStore.get(channelId);
   if (channelEmotes) return channelEmotes;
 
@@ -18,7 +21,6 @@ export const getBttvEmotes = async (channelId: string) => {
     ...channel.sharedEmotes,
   ];
 
-  const emotes: EmoteIDs = new Map();
   bttvEmotes.forEach((emote) => emotes.set(emote.code, emote.id));
   channelEmotesStore.set(channelId, emotes);
 
