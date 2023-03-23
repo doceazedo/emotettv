@@ -35,5 +35,5 @@ export const msgWithCustomEmotes: MessageFixture = {
 
 export const msgWithThirdPartyEmotes = {
   ...msgWithCustomEmotes,
-  message: 'hello world! catJAM KEKW',
+  message: 'hello world! D: catJAM ZreknarF KEKW',
 };

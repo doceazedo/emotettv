@@ -13,6 +13,10 @@ const getTwitchEmotesMsg = async () =>
     msgWithTwitchEmotes.tags.emotes,
     {
       channelId: msgWithTwitchEmotes.channelId,
+      thirdPartyProviders: {
+        bttv: false,
+        ffz: false,
+      },
     },
   );
 
@@ -32,6 +36,10 @@ const getThirdPartyEmotesMsg = async (enableThirdPartyProviders = true) =>
 const getCustomEmotesMsg = async () =>
   await parseEmotes(msgWithCustomEmotes.message, null, {
     customEmotes: customEmotesFactory,
+    thirdPartyProviders: {
+      bttv: false,
+      ffz: false,
+    },
   });
 
 describe('parse twitch emotes', () => {
@@ -63,7 +71,7 @@ describe('parse third party emotes', () => {
     const parsed = await getThirdPartyEmotesMsg();
     const words = parsed.toWords();
     const emotesCount = words.filter((word) => !!word.emote).length;
-    expect(emotesCount).toBe(2);
+    expect(emotesCount).toBe(4);
   });
 
   it('should parse message to words with no emotes', async () => {
@@ -76,3 +84,4 @@ describe('parse third party emotes', () => {
 
 // TODO: test parser without channelId
 // TODO: write more/better tests in general
+// TODO: test bttv/ffz channel/global emotes
