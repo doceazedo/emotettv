@@ -1,30 +1,47 @@
-import { GLOBAL_CHANNEL_KEY } from '../helpers';
+import { GENERIC_CHANNEL_KEY, GLOBAL_CHANNEL_KEY } from '../helpers';
 import { fetchChannelBadges, fetchGlobalBadges } from './badges.client';
-import { BadgeVersions, ChannelBadges } from './badges.types';
+import { ChannelBadges } from './badges.types';
 
-const channelBadgesStore: ChannelBadges = new Map();
+const $BADGES: ChannelBadges = new Map();
 
 export const getBadges = async (channelId?: string) => {
-  const badgesKey = channelId || GLOBAL_CHANNEL_KEY;
-  const channelBadges = channelBadgesStore.get(badgesKey);
-  if (channelBadges) return channelBadges;
+  channelId = channelId || GENERIC_CHANNEL_KEY;
 
-  const global = await fetchGlobalBadges();
-  let twitchBadges = { ...global.badge_sets };
+  let storedGlobalBadges = $BADGES.get(GLOBAL_CHANNEL_KEY);
+  let storedChannelBadges = $BADGES.get(channelId);
 
-  if (channelId) {
-    const channel = await fetchChannelBadges(channelId);
-    twitchBadges = {
-      ...twitchBadges,
-      ...channel.badge_sets,
-    };
+  if (!storedGlobalBadges) {
+    const globalBadges = await fetchGlobalBadges();
+    $BADGES.set(
+      GLOBAL_CHANNEL_KEY,
+      new Map(
+        Object.keys(globalBadges.badge_sets).map((code) => [
+          code,
+          globalBadges.badge_sets[code].versions,
+        ]),
+      ),
+    );
   }
 
-  const badges: BadgeVersions = new Map();
-  for (const code in twitchBadges) {
-    badges.set(code, twitchBadges[code].versions);
+  if (!storedChannelBadges) {
+    const channelBadges = await fetchChannelBadges(channelId);
+    $BADGES.set(
+      channelId,
+      new Map(
+        Object.keys(channelBadges.badge_sets).map((code) => [
+          code,
+          channelBadges.badge_sets[code].versions,
+        ]),
+      ),
+    );
   }
-  channelBadgesStore.set(badgesKey, badges);
 
-  return badges;
+  storedGlobalBadges = $BADGES.get(GLOBAL_CHANNEL_KEY);
+  storedChannelBadges = $BADGES.get(channelId);
+  if (!storedGlobalBadges || !storedChannelBadges) {
+    console.error('Could not retrieve stored badges');
+    return new Map();
+  }
+
+  return new Map([...storedGlobalBadges, ...storedChannelBadges]);
 };
