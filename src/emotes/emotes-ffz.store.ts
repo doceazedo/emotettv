@@ -1,29 +1,45 @@
-import { GLOBAL_CHANNEL_KEY } from '../helpers';
+import { GENERIC_CHANNEL_KEY, GLOBAL_CHANNEL_KEY } from '../helpers';
 import {
   fetchChannelFfzEmotes,
   fetchGlobalFfzEmotes,
 } from './emotes-ffz.client';
-import { ChannelEmotes, EmoteIDs, FfzEmotesResponse } from './emotes.types';
+import { ChannelEmotes, EmoteIDs } from './emotes.types';
 
-const channelEmotesStore: ChannelEmotes = new Map();
+const $EMOTES: ChannelEmotes = new Map();
 
-export const getFfzEmotes = async (channelId?: string, enabled = true) => {
-  const emotes: EmoteIDs = new Map();
-  if (!enabled || !channelId) return emotes;
+export const getFfzEmotes = async (
+  channelId?: string,
+  enabled = true,
+): Promise<EmoteIDs> => {
+  if (!enabled) return new Map();
 
-  const emotesKey = channelId || GLOBAL_CHANNEL_KEY;
-  const channelEmotes = channelEmotesStore.get(emotesKey);
-  if (channelEmotes) return channelEmotes;
+  channelId = channelId || GENERIC_CHANNEL_KEY;
 
-  const global = await fetchGlobalFfzEmotes();
-  let ffzEmotes: FfzEmotesResponse = [...global];
-  if (channelId) {
-    const channel = await fetchChannelFfzEmotes(channelId);
-    ffzEmotes = [...ffzEmotes, ...channel];
+  let storedGlobalEmotes = $EMOTES.get(GLOBAL_CHANNEL_KEY);
+  let storedChannelEmotes = $EMOTES.get(channelId);
+
+  if (!storedGlobalEmotes) {
+    const globalEmotes = await fetchGlobalFfzEmotes();
+    $EMOTES.set(
+      GLOBAL_CHANNEL_KEY,
+      new Map(globalEmotes.map((x) => [x.code, x.id.toString()])),
+    );
   }
 
-  ffzEmotes.forEach((emote) => emotes.set(emote.code, emote.id.toString()));
-  channelEmotesStore.set(emotesKey, emotes);
+  if (!storedChannelEmotes) {
+    const channelEmotes = await fetchChannelFfzEmotes(channelId);
+    $EMOTES.set(
+      channelId,
+      new Map(channelEmotes.map((x) => [x.code, x.id.toString()])),
+    );
+  }
 
-  return emotes;
+  storedGlobalEmotes = $EMOTES.get(GLOBAL_CHANNEL_KEY);
+  storedChannelEmotes = $EMOTES.get(channelId);
+  if (!storedGlobalEmotes || !storedChannelEmotes) {
+    console.error('Could not retrieve stored FFZ emotes');
+    return new Map();
+  }
+
+  return new Map([...storedGlobalEmotes, ...storedChannelEmotes]);
 };
