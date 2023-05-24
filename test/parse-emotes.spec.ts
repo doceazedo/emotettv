@@ -82,6 +82,20 @@ describe('parse third party emotes', () => {
   });
 });
 
-// TODO: test parser without channelId
-// TODO: write more/better tests in general
-// TODO: test bttv/ffz channel/global emotes
+describe('parse without channelId', () => {
+  it('should parse message to words', async () => {
+    const parsed = await parseEmotes(
+      msgWithTwitchEmotes.message,
+      msgWithTwitchEmotes.tags.emotes,
+      {
+        thirdPartyProviders: {
+          bttv: false,
+          ffz: false,
+        },
+      },
+    );
+    const words = parsed.toWords();
+    const emotesCount = words.filter((word) => !!word.emote).length;
+    expect(emotesCount).toBe(1);
+  });
+});
