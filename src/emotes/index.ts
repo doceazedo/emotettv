@@ -1,24 +1,13 @@
-import { parseTwitchEmotes } from "./twitch-emotes";
-import { loadBttvEmotes, parseBttvEmotes } from "./bttv-emotes";
+import { twitchMessageParser } from "./twitch-emotes";
+import { bttvMessageParser } from "./bttv-emotes";
 import type {
   EmoteParserOptions,
   EmotePositions,
-  EmotesParserItem,
+  EmotesParser,
   ParsedEmotesMessage,
 } from "../types";
 
-const emoteParsers: EmotesParserItem[] = [
-  {
-    provider: "twitch",
-    parse: parseTwitchEmotes,
-    load: async () => {},
-  },
-  {
-    provider: "bttv",
-    parse: parseBttvEmotes,
-    load: loadBttvEmotes,
-  },
-];
+const emoteParsers: EmotesParser[] = [twitchMessageParser, bttvMessageParser];
 
 export const parseEmotes = async (
   message: string,

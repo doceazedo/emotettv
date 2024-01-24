@@ -1,6 +1,6 @@
-import type { EmotesParser } from "../types";
+import type { MessageParser, EmotesParser } from "../types";
 
-export const parseTwitchEmotes: EmotesParser = async (
+const parseTwitchEmotes: MessageParser = async (
   message,
   emotePositions = {},
 ) => {
@@ -13,7 +13,10 @@ export const parseTwitchEmotes: EmotesParser = async (
       return {
         ...word,
         emote: {
-          images: getEmoteURLs(emoteId, ["1.0", "2.0", "3.0"]),
+          images: ["1.0", "2.0", "3.0"].map(
+            (scale) =>
+              `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/${scale}`,
+          ),
         },
       };
     }
@@ -21,8 +24,8 @@ export const parseTwitchEmotes: EmotesParser = async (
   });
 };
 
-const getEmoteURLs = (emoteId: string, scales: string[]) =>
-  scales.map(
-    (scale) =>
-      `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/${scale}`,
-  );
+export const twitchMessageParser: EmotesParser = {
+  provider: "twitch",
+  parse: parseTwitchEmotes,
+  load: async () => {},
+};

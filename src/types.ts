@@ -20,7 +20,7 @@ export type ParsedEmotesMessage = {
   };
 }[];
 
-export type EmotesParser = (
+export type MessageParser = (
   message: ParsedEmotesMessage,
   emotePositions: EmotePositions,
   options: EmoteParserOptions,
@@ -31,9 +31,9 @@ export type EmotesLoader = (
   force: boolean,
 ) => Promise<void>;
 
-export type EmotesParserItem = {
+export type EmotesParser = {
   provider: string;
-  parse: EmotesParser;
+  parse: MessageParser;
   load: EmotesLoader;
 };
 
