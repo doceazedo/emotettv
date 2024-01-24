@@ -13,6 +13,6 @@
     "node": true
   },
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": 0
   }
 }
