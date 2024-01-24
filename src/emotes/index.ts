@@ -1,4 +1,5 @@
 import { parseTwitchEmotes } from "./twitch-emotes";
+import { loadBttvEmotes, parseBttvEmotes } from "./bttv-emotes";
 import type {
   EmoteParserOptions,
   EmotePositions,
@@ -10,6 +11,12 @@ const emoteParsers: EmotesParserItem[] = [
   {
     provider: "twitch",
     parse: parseTwitchEmotes,
+    load: async () => {},
+  },
+  {
+    provider: "bttv",
+    parse: parseBttvEmotes,
+    load: loadBttvEmotes,
   },
 ];
 
@@ -20,6 +27,7 @@ export const parseEmotes = async (
 ) => {
   const emotePositions: EmotePositions = _emotePositions || {};
   const options: EmoteParserOptions = {
+    channelId: null,
     ..._options,
     providers: {
       twitch: true,
@@ -33,7 +41,7 @@ export const parseEmotes = async (
     async (messagePromise, parser) => {
       const message = await messagePromise;
       if (!options.providers?.[parser.provider]) return message;
-      return await parser.parse(message, emotePositions);
+      return parser.parse(message, emotePositions, options);
     },
     prepare(message),
   );
@@ -57,5 +65,11 @@ const prepare = async (message: string): Promise<ParsedEmotesMessage> => {
     const position = `${currentPos}-${currentPos + content.length - 1}`;
     currentPos += content.length + 1;
     return { content, position };
+  });
+};
+
+export const reloadEmotes = async (channelId: string | null) => {
+  emoteParsers.forEach(async (parser) => {
+    await parser.load(channelId, true);
   });
 };

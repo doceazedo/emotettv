@@ -8,7 +8,7 @@ export const parseTwitchEmotes: EmotesParser = async (
     const emoteIdx = Object.values(emotePositions).findIndex((emotePos) =>
       emotePos.includes(word.position),
     );
-    if (emoteIdx >= 0) {
+    if (emoteIdx >= 0 && !word.emote) {
       const emoteId = Object.keys(emotePositions)[emoteIdx];
       return {
         ...word,
