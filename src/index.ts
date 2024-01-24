@@ -1,3 +1,3 @@
-import { parseEmotes } from "./emotes";
+import { parseEmotes, reloadEmotes } from "./emotes";
 
-export { parseEmotes };
+export { parseEmotes, reloadEmotes };
