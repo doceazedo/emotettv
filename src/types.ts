@@ -78,3 +78,50 @@ export type EmotesList = {
   code: string;
   channelId: string | null;
 }[];
+
+export type FfzSet = {
+  id: number;
+  _type: number;
+  title: string;
+  emoticons: {
+    id: number;
+    name: string;
+    height: number;
+    width: number;
+    public: boolean;
+    hidden: boolean;
+    modifier: boolean;
+    modifier_flags: number;
+    owner: {
+      _id: number;
+      name: string;
+      display_name: string;
+    };
+    urls: {
+      "1": string;
+      "2": string;
+      "4": string;
+    };
+    status: number;
+    usage_count: number;
+    created_at: string;
+    last_updated: string;
+  }[];
+};
+
+export type FfzChannelEmotesResponse = {
+  room: unknown;
+  sets: {
+    [id: string]: FfzSet;
+  };
+};
+
+export type FfzGlobalEmotesResponse = {
+  default_sets: number[];
+  sets: {
+    [id: string]: FfzSet;
+  };
+  users: {
+    [id: string]: string[];
+  };
+};

@@ -1,5 +1,6 @@
 import { twitchMessageParser } from "./twitch-emotes";
 import { bttvMessageParser } from "./bttv-emotes";
+import { ffzMessageParser } from "./ffz-emotes";
 import type {
   EmoteParserOptions,
   EmotePositions,
@@ -7,7 +8,11 @@ import type {
   ParsedEmotesMessage,
 } from "../types";
 
-const emoteParsers: EmotesParser[] = [twitchMessageParser, bttvMessageParser];
+const emoteParsers: EmotesParser[] = [
+  twitchMessageParser,
+  bttvMessageParser,
+  ffzMessageParser,
+];
 
 export const parseEmotes = async (
   message: string,
