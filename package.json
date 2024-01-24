@@ -1,0 +1,36 @@
+{
+  "name": "emotettv",
+  "version": "0.0.19",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doceazedo/emotettv.git"
+  },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc && vite build --watch",
+    "start": "vite --host",
+    "build": "tsc && vite build",
+    "build:types": "dts-bundle-generator --config ./dts-bundle-generator.config.ts",
+    "lint:scripts": "eslint . --ext .ts",
+    "format:scripts": "prettier . --write"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "dts-bundle-generator": "^9.2.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "^3.1.1",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11",
+    "vite-plugin-dts": "^3.7.0"
+  }
+}
