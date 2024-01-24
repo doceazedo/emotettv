@@ -8,6 +8,7 @@ export type EmoteParserOptions = {
     twitch: boolean;
     bttv: boolean;
     ffz: boolean;
+    seventv: boolean;
     [provider: string]: boolean;
   };
 };
@@ -17,6 +18,11 @@ export type ParsedEmotesMessage = {
   position: string;
   emote?: {
     images: string[];
+    overlays?: {
+      images: string[];
+      alt: string;
+    }[];
+    isZeroWidth?: boolean;
   };
 }[];
 
@@ -76,6 +82,7 @@ export type BttvGlobalEmotesResponse = {
 export type EmotesList = {
   id: string;
   code: string;
+  isZeroWidth?: boolean;
   channelId: string | null;
 }[];
 
@@ -123,5 +130,64 @@ export type FfzGlobalEmotesResponse = {
   };
   users: {
     [id: string]: string[];
+  };
+};
+
+export type StvGlobalEmotesResponse = {
+  id: string;
+  name: string;
+  flags: number;
+  immutable: boolean;
+  privileged: boolean;
+  emotes: {
+    id: string;
+    name: string;
+    flags: number;
+    timestamp: number;
+    actor_id: string;
+    data: {
+      id: string;
+      name: string;
+      flags: number;
+      lifecycle: number;
+      state: string[];
+      listed: boolean;
+      animated: boolean;
+      owner: {
+        id: string;
+        username: string;
+        display_name: string;
+        avatar_url?: string;
+        style: {
+          color?: number;
+        };
+        roles?: string[];
+      };
+      host: {
+        url: string;
+        files: {
+          name: string;
+          static_name: string;
+          width: number;
+          height: number;
+          frame_count: number;
+          size: number;
+          format: string;
+        }[];
+      };
+      tags?: string[];
+    };
+  }[];
+  emote_count: number;
+  capacity: number;
+  owner: {
+    id: string;
+    username: string;
+    display_name: string;
+    avatar_url: string;
+    style: {
+      color: number;
+    };
+    roles: string[];
   };
 };

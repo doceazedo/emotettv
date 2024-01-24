@@ -34,6 +34,7 @@ export const makeEmoteParser = (
           ...word,
           emote: {
             images: getEmoteURLs(emote.id),
+            isZeroWidth: emote.isZeroWidth,
           },
         };
       }

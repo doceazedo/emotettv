@@ -9,4 +9,4 @@ const parsedMessage = await parseEmotes(
   },
 );
 console.log(parsedMessage.toArray());
-document.body.innerHTML = `<p>${parsedMessage.toHTML()}</p>`;
+document.body.innerHTML = `<div>${parsedMessage.toHTML()}</div>`;

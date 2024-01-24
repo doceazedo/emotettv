@@ -1,6 +1,7 @@
 import { twitchMessageParser } from "./twitch-emotes";
 import { bttvMessageParser } from "./bttv-emotes";
 import { ffzMessageParser } from "./ffz-emotes";
+import { stvMessageParser, stvOverlayParser } from "./7tv-emotes";
 import type {
   EmoteParserOptions,
   EmotePositions,
@@ -12,6 +13,8 @@ const emoteParsers: EmotesParser[] = [
   twitchMessageParser,
   bttvMessageParser,
   ffzMessageParser,
+  stvMessageParser,
+  stvOverlayParser,
 ];
 
 export const parseEmotes = async (
@@ -27,6 +30,7 @@ export const parseEmotes = async (
       twitch: true,
       bttv: true,
       ffz: true,
+      seventv: true,
       ..._options?.providers,
     },
   };
@@ -47,7 +51,13 @@ export const parseEmotes = async (
         .map((message) => {
           if (!message.emote) return message.content;
           const emoteURL = message.emote.images[scale];
-          return `<img src="${emoteURL}" alt="${message.content}" />`;
+          const overlays = (message.emote?.overlays || [])
+            .map(
+              (overlay) =>
+                `<img class="emotettv-overlay" style="position:absolute;top:0;left:0" src="${overlay.images[scale]}" alt="${overlay.alt}" />`,
+            )
+            .join("");
+          return `<figure class="emotettv-emote" style="position:relative;display:inline-block;margin:0"><img src="${emoteURL}" alt="${message.content}" />${overlays}</figure>`;
         })
         .join(" "),
   };
