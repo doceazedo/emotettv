@@ -11,6 +11,7 @@ export const getBttvChannelEmotes = async (
 ): Promise<EmotesList> => {
   try {
     const resp = await fetch(`${BASE_URL}/cached/users/twitch/${channelId}`);
+    if (!resp.ok) throw Error();
     const data = (await resp.json()) as BttvChannelEmotesResponse;
     return [...data.channelEmotes, ...data.sharedEmotes].map((x) => ({
       id: x.id,
@@ -26,6 +27,7 @@ export const getBttvChannelEmotes = async (
 export const getBttvGlobalEmotes = async (): Promise<EmotesList> => {
   try {
     const resp = await fetch(`${BASE_URL}/cached/emotes/global`);
+    if (!resp.ok) throw Error();
     const data = (await resp.json()) as BttvGlobalEmotesResponse;
     return data.map((x) => ({
       id: x.id,

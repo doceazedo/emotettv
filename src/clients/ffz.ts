@@ -11,6 +11,7 @@ export const getFfzChannelEmotes = async (
 ): Promise<EmotesList> => {
   try {
     const resp = await fetch(`${BASE_URL}/room/id/${channelId}`);
+    if (!resp.ok) throw Error();
     const data = (await resp.json()) as FfzChannelEmotesResponse;
     return Object.values(data.sets)
       .map((set) =>
@@ -30,6 +31,7 @@ export const getFfzChannelEmotes = async (
 export const getFfzGlobalEmotes = async (): Promise<EmotesList> => {
   try {
     const resp = await fetch(`${BASE_URL}/set/global`);
+    if (!resp.ok) throw Error();
     const data = (await resp.json()) as FfzGlobalEmotesResponse;
     return Object.values(data.sets)
       .map((set) =>

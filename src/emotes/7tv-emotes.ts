@@ -1,10 +1,10 @@
 import { makeEmoteParser } from "./make-emote-parser";
-import { get7tvGlobalEmotes } from "../clients/7tv";
+import { get7tvChannelEmotes, get7tvGlobalEmotes } from "../clients/7tv";
 import type { EmotesParser } from "types";
 
 export const stvMessageParser = makeEmoteParser(
   "seventv",
-  [get7tvGlobalEmotes],
+  [get7tvChannelEmotes, get7tvGlobalEmotes],
   (emoteId: string) =>
     ["1x", "2x", "3x", "4x"].map(
       (scale) => `https://cdn.7tv.app/emote/${emoteId}/${scale}.webp`,

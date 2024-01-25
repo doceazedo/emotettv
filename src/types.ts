@@ -133,7 +133,7 @@ export type FfzGlobalEmotesResponse = {
   };
 };
 
-export type StvGlobalEmotesResponse = {
+export type StvEmoteSet = {
   id: string;
   name: string;
   flags: number;
@@ -189,5 +189,24 @@ export type StvGlobalEmotesResponse = {
       color: number;
     };
     roles: string[];
+  };
+};
+
+export type StvGlobalEmotesResponse = StvEmoteSet;
+
+export type StvChannelEmotesResponse = {
+  id: string;
+  platform: string;
+  username: string;
+  display_name: string;
+  linked_at: number;
+  emote_capacity: number;
+  emote_set: StvEmoteSet;
+  user: {
+    id: string;
+    username: string;
+    display_name: string;
+    created_at: number;
+    avatar_url: string;
   };
 };
