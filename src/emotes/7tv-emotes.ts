@@ -22,14 +22,14 @@ export const stvOverlayParser: EmotesParser = {
           word.emote.overlays = [];
         }
 
-        arr.slice(i + 1).some((nextWord, index) => {
+        arr.slice(i + 1).some((nextWord) => {
           if (nextWord.emote && nextWord.emote.isZeroWidth) {
             console.log(word.content, nextWord.content);
             word?.emote?.overlays?.push({
               images: nextWord.emote.images,
               alt: nextWord.content,
             });
-            arr.splice(i + index + 1, 1);
+            arr.splice(i + 1, 1);
           } else {
             return true;
           }

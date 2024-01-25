@@ -9,7 +9,7 @@ export const tmijsMessageWithEmotes = {
       subscriber: "12",
       turbo: "1",
     },
-    "client-nonce": "4a06240c519ea2f1a40c6cdc10a765a4",
+    "client-nonce": "7065513383cba40b2181bc58b3261cb2",
     color: "#8968D3",
     "display-name": "DoceAzedo911",
     emotes: {
@@ -19,12 +19,12 @@ export const tmijsMessageWithEmotes = {
     },
     "first-msg": false,
     flags: null,
-    id: "859b01d5-0605-4018-8360-84c691877aa4",
+    id: "90f91999-897a-49b7-bc9c-c646187cd702",
     mod: false,
     "returning-chatter": false,
     "room-id": "98776633",
     subscriber: true,
-    "tmi-sent-ts": "1706137585874",
+    "tmi-sent-ts": "1706143185265",
     turbo: true,
     "user-id": "98776633",
     "user-type": null,
@@ -36,6 +36,6 @@ export const tmijsMessageWithEmotes = {
     "message-type": "chat",
   },
   message:
-    "global VoHiYo channel sub doceazComfy animated sub dizzyLurk global bttv D: channel bttv catJAM global ffz ZreknarF channel ffz AYAYA 7tv FeelsStrongMan RainTime",
+    "global VoHiYo channel sub doceazComfy animated sub dizzyLurk global bttv D: channel bttv catJAM global ffz ZreknarF channel ffz monkaEyes 7tv FeelsStrongMan PETPET RainTime SteerR",
   self: false,
 };
