@@ -10,6 +10,7 @@ const BASE_URL = "https://api.frankerfacez.com/v1";
 export const getFfzChannelEmotes = async (
   channelId: string | null,
 ): Promise<EmotesList> => {
+  if (!channelId) return [];
   try {
     const resp = await fetch(`${BASE_URL}/room/id/${channelId}`);
     if (!resp.ok) throw Error();

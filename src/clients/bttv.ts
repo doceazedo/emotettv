@@ -10,6 +10,7 @@ const BASE_URL = "https://api.betterttv.net/3";
 export const getBttvChannelEmotes = async (
   channelId: string | null,
 ): Promise<EmotesList> => {
+  if (!channelId) return [];
   try {
     const resp = await fetch(`${BASE_URL}/cached/users/twitch/${channelId}`);
     if (!resp.ok) throw Error();
