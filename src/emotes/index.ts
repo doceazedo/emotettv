@@ -20,7 +20,7 @@ const emoteParsers: EmotesParser[] = [
 
 export const parseEmotes = async (
   message: string,
-  _emotePositions: EmotePositions | null,
+  _emotePositions: EmotePositions | null = null,
   _options: Partial<ParserOptions> | null = null,
 ) => {
   const emotePositions: EmotePositions = _emotePositions || {};
