@@ -10,5 +10,4 @@ const parsedBadges = await parseBadges(
   options,
 );
 const parsedMessage = await parseEmotes(msg.message, msg.tags.emotes, options);
-console.log(parsedMessage.toArray());
-document.body.innerHTML = `<div>${parsedBadges.toHTML(1)} <b style="color:${msg.tags.color}">${msg.tags["display-name"]}</b>: ${parsedMessage.toHTML(1)}</div>`;
+document.body.innerHTML = `<div>${parsedBadges.toHTML()} <b style="color:${msg.tags.color}">${msg.tags["display-name"]}</b>: ${parsedMessage.toHTML()}</div>`;

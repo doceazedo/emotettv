@@ -1,38 +1,38 @@
-import type { BadgesList, UnttvBadgesResponse } from "../types";
+import type { TwitchBadgesList, UnttvBadgesResponse } from "../types";
 
 const BASE_URL = "https://unttv.vercel.app";
 
 export const getTwitchChannelBadges = async (
   channelId: string | null,
-): Promise<BadgesList> => {
+): Promise<TwitchBadgesList> => {
   if (!channelId) return [];
   try {
     const resp = await fetch(`${BASE_URL}/badges/channel/${channelId}`);
     if (!resp.ok) throw Error();
     const data = (await resp.json()) as UnttvBadgesResponse;
-    return formatBadgesList(data, channelId);
+    return formatTwitchBadgesList(data, channelId);
   } catch (error) {
     console.error(error);
     return [];
   }
 };
 
-export const getTwitchGlobalBadges = async (): Promise<BadgesList> => {
+export const getTwitchGlobalBadges = async (): Promise<TwitchBadgesList> => {
   try {
     const resp = await fetch(`${BASE_URL}/badges/global`);
     if (!resp.ok) throw Error();
     const data = (await resp.json()) as UnttvBadgesResponse;
-    return formatBadgesList(data, null);
+    return formatTwitchBadgesList(data, null);
   } catch (error) {
     console.error(error);
     return [];
   }
 };
 
-const formatBadgesList = (
+const formatTwitchBadgesList = (
   data: UnttvBadgesResponse,
   channelId: string | null,
-): BadgesList =>
+): TwitchBadgesList =>
   data
     .map((x) =>
       x.versions.map((v) => ({

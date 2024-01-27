@@ -34,13 +34,28 @@ export type MessageParser = (
 
 export type EmotesLoader = (
   channelId: string | null,
-  force: boolean,
+  force?: boolean,
+) => Promise<void>;
+
+export type BadgesLoader = (
+  channelId: string | null,
+  force?: boolean,
 ) => Promise<void>;
 
 export type EmotesParser = {
   provider: string;
   parse: MessageParser;
   load: EmotesLoader;
+};
+
+export type BadgesParser = {
+  provider: string;
+  parse: (
+    badges: BadgeVersions,
+    username: string | null,
+    channelId: string | null,
+  ) => Promise<ParsedBadges>;
+  load: BadgesLoader;
 };
 
 export type BttvChannelEmotesResponse = {
@@ -77,6 +92,18 @@ export type BttvGlobalEmotesResponse = {
   modifier: boolean;
   width?: number;
   height?: number;
+}[];
+
+export type BttvBadgesResponse = {
+  id: string;
+  name: string;
+  displayName: string;
+  providerId: string;
+  badge: {
+    type: number;
+    description: string;
+    svg: string;
+  };
 }[];
 
 export type EmotesList = {
@@ -225,7 +252,7 @@ export type UnttvBadgesResponse = {
   }[];
 }[];
 
-export type BadgesList = {
+export type TwitchBadgesList = {
   id: string;
   versionId: string;
   channelId: string | null;
@@ -239,3 +266,8 @@ export type BadgesList = {
 export type BadgeVersions = {
   [badgeId: string]: string;
 };
+
+export type ParsedBadges = {
+  title: string;
+  images: string[];
+}[];

@@ -2,30 +2,16 @@ import {
   getTwitchChannelBadges,
   getTwitchGlobalBadges,
 } from "../clients/unttv";
-import type { BadgesList, BadgeVersions } from "../types";
+import type {
+  TwitchBadgesList,
+  ParsedBadges,
+  BadgesParser,
+  BadgesLoader,
+} from "../types";
 
-let badgesList: BadgesList = [];
+let badgesList: TwitchBadgesList = [];
 
-export const parseTwitchBadges = async (
-  badges: BadgeVersions,
-  channelId: string | null,
-) => {
-  await load(channelId);
-  return Object.keys(badges)
-    .map((badgeId) => {
-      const version = badges[badgeId];
-      const badge = badgesList.find(
-        (x) =>
-          x.id == badgeId &&
-          x.versionId == version &&
-          (x.channelId == channelId || x.channelId == null),
-      );
-      return badge;
-    })
-    .filter((x) => !!x) as BadgesList;
-};
-
-export const load = async (channelId: string | null, force = false) => {
+const load: BadgesLoader = async (channelId, force = false) => {
   const hasLoaded = badgesList.find((x) => x.channelId === channelId);
   if (hasLoaded && !force) return;
   badgesList = [
@@ -37,4 +23,28 @@ export const load = async (channelId: string | null, force = false) => {
       ])
     ).flat(),
   ];
+};
+
+export const twitchBadgesParser: BadgesParser = {
+  provider: "twitch",
+  parse: async (badges, username, channelId) => {
+    await load(channelId);
+    return Object.keys(badges)
+      .map((badgeId) => {
+        const version = badges[badgeId];
+        const badge = badgesList.find(
+          (x) =>
+            x.id == badgeId &&
+            x.versionId == version &&
+            (x.channelId == channelId || x.channelId == null),
+        );
+        if (!badge) return null;
+        return {
+          title: badge.title,
+          images: badge.images,
+        };
+      })
+      .filter((x) => !!x) as ParsedBadges;
+  },
+  load,
 };

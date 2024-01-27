@@ -1,6 +1,9 @@
 import { loadOptions } from "../utils/load-options";
-import type { BadgeVersions, ParserOptions } from "../types";
-import { load, parseTwitchBadges } from "./twitch-badges";
+import type { BadgeVersions, BadgesParser, ParserOptions } from "../types";
+import { twitchBadgesParser } from "./twitch-badges";
+import { bttvBadgesParser } from "./bttv-badges";
+
+const badgeParsers: BadgesParser[] = [twitchBadgesParser, bttvBadgesParser];
 
 export const parseBadges = async (
   badges: BadgeVersions | null,
@@ -8,7 +11,14 @@ export const parseBadges = async (
   _options: Partial<ParserOptions> | null = null,
 ) => {
   const options = loadOptions(_options);
-  const parsedBadges = await parseTwitchBadges(badges || {}, options.channelId);
+  const parsedBadges = (
+    await Promise.all(
+      badgeParsers.map(async (parser) => {
+        if (!options.providers?.[parser.provider]) return [];
+        return await parser.parse(badges || {}, username, options.channelId);
+      }),
+    )
+  ).flat();
   return {
     toArray: () => parsedBadges,
     toHTML: (scale = 1, inlineStyles = true) =>
@@ -16,7 +26,8 @@ export const parseBadges = async (
         .map((badge) => {
           const height = [18, 20, 22][scale];
           const offset = [4, 5, 6][scale] * -1;
-          return `<img class="emotettv-badge" ${inlineStyles ? `style="height:${height}px;margin-bottom:${offset}px"` : ""} src="${badge.images[scale]}" alt="${badge.title}" />`;
+          const image = badge.images?.[scale] || badge.images[0];
+          return `<img class="emotettv-badge" ${inlineStyles ? `style="height:${height}px;margin-bottom:${offset}px"` : ""} src="${image}" alt="${badge.title}" />`;
         })
         .join(" "),
   };
@@ -27,5 +38,10 @@ export const reloadBadges = async (
   _options: Partial<ParserOptions> | null = null,
 ) => {
   const options = loadOptions(_options);
-  await load(options.channelId, true);
+  await Promise.all(
+    badgeParsers.map(async (parser) => {
+      if (!options.providers?.[parser.provider]) return;
+      return await parser.load(options.channelId, true);
+    }),
+  );
 };

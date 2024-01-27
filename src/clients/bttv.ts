@@ -2,6 +2,7 @@ import {
   BttvChannelEmotesResponse,
   BttvGlobalEmotesResponse,
   EmotesList,
+  BttvBadgesResponse,
 } from "../types";
 
 const BASE_URL = "https://api.betterttv.net/3";
@@ -34,6 +35,18 @@ export const getBttvGlobalEmotes = async (): Promise<EmotesList> => {
       code: x.code,
       channelId: null,
     }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const getBttvBadges = async () => {
+  try {
+    const resp = await fetch(`${BASE_URL}/cached/badges/twitch`);
+    if (!resp.ok) throw Error();
+    const data = (await resp.json()) as BttvBadgesResponse;
+    return data;
   } catch (error) {
     console.error(error);
     return [];

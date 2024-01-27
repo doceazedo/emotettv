@@ -41,13 +41,14 @@ export const parseEmotes = async (
       parsedMessage
         .map((message) => {
           if (!message.emote) return message.content;
-          const emoteURL = message.emote.images[scale];
+          const emoteURL =
+            message.emote.images?.[scale] || message.emote.images[0];
           const height = [24, 28, 32, 48][scale];
           const offset = [6, 8, 10, 20][scale] * -1;
           const overlays = (message.emote?.overlays || [])
             .map(
               (overlay) =>
-                `<img class="emotettv-overlay" ${inlineStyles ? `style="position:absolute;top:0;left:0;height:${height}px"` : ""} src="${overlay.images[scale]}" alt="${overlay.alt}" />`,
+                `<img class="emotettv-overlay" ${inlineStyles ? `style="position:absolute;top:0;left:0;height:${height}px"` : ""} src="${overlay.images?.[scale] || overlay.images[0]}" alt="${overlay.alt}" />`,
             )
             .join("");
           return `<figure class="emotettv-emote" ${inlineStyles ? `style="position:relative;display:inline-block;margin:0"` : ""}><img class="emotettv-img" src="${emoteURL}" alt="${message.content}" ${inlineStyles ? `style="height:${height}px;margin-bottom:${offset}px"` : ""} />${overlays}</figure>`;
