@@ -25,7 +25,7 @@ export const parseTwitchBadges = async (
     .filter((x) => !!x) as BadgesList;
 };
 
-const load = async (channelId: string | null, force = false) => {
+export const load = async (channelId: string | null, force = false) => {
   const hasLoaded = badgesList.find((x) => x.channelId === channelId);
   if (hasLoaded && !force) return;
   badgesList = [

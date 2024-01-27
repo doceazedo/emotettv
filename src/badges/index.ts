@@ -1,6 +1,6 @@
 import { loadOptions } from "../utils/load-options";
 import type { BadgeVersions, ParserOptions } from "../types";
-import { parseTwitchBadges } from "./twitch-badges";
+import { load, parseTwitchBadges } from "./twitch-badges";
 
 export const parseBadges = async (
   badges: BadgeVersions | null,
@@ -20,4 +20,12 @@ export const parseBadges = async (
         })
         .join(" "),
   };
+};
+
+export const reloadBadges = async (
+  channelId: string | null,
+  _options: Partial<ParserOptions> | null = null,
+) => {
+  const options = loadOptions(_options);
+  await load(options.channelId, true);
 };

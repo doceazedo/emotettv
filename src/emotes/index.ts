@@ -65,8 +65,12 @@ const prepare = async (message: string): Promise<ParsedEmotesMessage> => {
   });
 };
 
-export const reloadEmotes = async (channelId: string | null) => {
+export const reloadEmotes = async (
+  _options: Partial<ParserOptions> | null = null,
+) => {
+  const options = loadOptions(_options);
   emoteParsers.forEach(async (parser) => {
-    await parser.load(channelId, true);
+    if (!options.providers?.[parser.provider]) return;
+    await parser.load(options.channelId, true);
   });
 };
