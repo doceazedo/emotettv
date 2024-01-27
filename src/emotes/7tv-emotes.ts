@@ -24,7 +24,6 @@ export const stvOverlayParser: EmotesParser = {
 
         arr.slice(i + 1).some((nextWord) => {
           if (nextWord.emote && nextWord.emote.isZeroWidth) {
-            console.log(word.content, nextWord.content);
             word?.emote?.overlays?.push({
               images: nextWord.emote.images,
               alt: nextWord.content,

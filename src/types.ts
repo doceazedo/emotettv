@@ -2,7 +2,7 @@ export type EmotePositions = {
   [emoteId: string]: string[];
 };
 
-export type EmoteParserOptions = {
+export type ParserOptions = {
   channelId: string | null;
   providers: {
     twitch: boolean;
@@ -29,7 +29,7 @@ export type ParsedEmotesMessage = {
 export type MessageParser = (
   message: ParsedEmotesMessage,
   emotePositions: EmotePositions,
-  options: EmoteParserOptions,
+  options: ParserOptions,
 ) => Promise<ParsedEmotesMessage>;
 
 export type EmotesLoader = (
@@ -209,4 +209,33 @@ export type StvChannelEmotesResponse = {
     created_at: number;
     avatar_url: string;
   };
+};
+
+export type UnttvBadgesResponse = {
+  id: string;
+  versions: {
+    id: string;
+    title: string;
+    description: string;
+    clickAction: string;
+    clickUrl: string;
+    image_url_1x: string;
+    image_url_2x: string;
+    image_url_4x: string;
+  }[];
+}[];
+
+export type BadgesList = {
+  id: string;
+  versionId: string;
+  channelId: string | null;
+  title: string;
+  description: string;
+  clickAction: string;
+  clickUrl: string;
+  images: string[];
+}[];
+
+export type BadgeVersions = {
+  [badgeId: string]: string;
 };

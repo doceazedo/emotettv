@@ -1,3 +1,4 @@
+import { parseBadges } from "./badges";
 import { parseEmotes, reloadEmotes } from "./emotes";
 
-export { parseEmotes, reloadEmotes };
+export { parseBadges, parseEmotes, reloadEmotes };

@@ -2,11 +2,12 @@ import { twitchMessageParser } from "./twitch-emotes";
 import { bttvMessageParser } from "./bttv-emotes";
 import { ffzMessageParser } from "./ffz-emotes";
 import { stvMessageParser, stvOverlayParser } from "./7tv-emotes";
+import { loadOptions } from "../utils/load-options";
 import type {
-  EmoteParserOptions,
   EmotePositions,
   EmotesParser,
   ParsedEmotesMessage,
+  ParserOptions,
 } from "../types";
 
 const emoteParsers: EmotesParser[] = [
@@ -20,20 +21,10 @@ const emoteParsers: EmotesParser[] = [
 export const parseEmotes = async (
   message: string,
   _emotePositions: EmotePositions | null,
-  _options: Partial<EmoteParserOptions> | null = null,
+  _options: Partial<ParserOptions> | null = null,
 ) => {
   const emotePositions: EmotePositions = _emotePositions || {};
-  const options: EmoteParserOptions = {
-    channelId: null,
-    ..._options,
-    providers: {
-      twitch: true,
-      bttv: true,
-      ffz: true,
-      seventv: true,
-      ..._options?.providers,
-    },
-  };
+  const options = loadOptions(_options);
 
   const parsedMessage = await emoteParsers.reduce(
     async (messagePromise, parser) => {
