@@ -40,6 +40,7 @@ export const twitchBadgesParser: BadgesParser = {
         );
         if (!badge) return null;
         return {
+          id: badge.id,
           title: badge.title,
           images: badge.images,
         };

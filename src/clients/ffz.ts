@@ -1,5 +1,6 @@
 import type {
   EmotesList,
+  FfzBadgesResponse,
   FfzChannelEmotesResponse,
   FfzGlobalEmotesResponse,
 } from "types";
@@ -45,5 +46,20 @@ export const getFfzGlobalEmotes = async (): Promise<EmotesList> => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const getFfzBadges = async () => {
+  try {
+    const resp = await fetch(`${BASE_URL}/badges`);
+    if (!resp.ok) throw Error();
+    const data = (await resp.json()) as FfzBadgesResponse;
+    return data;
+  } catch (error) {
+    console.error(error);
+    return {
+      badges: [],
+      users: {},
+    };
   }
 };

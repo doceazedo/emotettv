@@ -16,6 +16,7 @@ export const bttvBadgesParser: BadgesParser = {
     return badgesList
       .filter((x) => x.name == username)
       .map((x) => ({
+        id: x.badge.type.toString(),
         title: x.badge.description,
         images: [x.badge.svg],
       }));

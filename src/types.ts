@@ -160,6 +160,30 @@ export type FfzGlobalEmotesResponse = {
   };
 };
 
+export type FfzBadgesResponse = {
+  badges: FfzBadge[];
+  users: FfzBadgeUsers;
+};
+
+export type FfzBadge = {
+  id: number;
+  name: string;
+  title: string;
+  slot: number;
+  replaces: string;
+  color: string;
+  image: string;
+  urls: {
+    "1": string;
+    "2": string;
+    "4": string;
+  };
+};
+
+export type FfzBadgeUsers = {
+  [badgeId: string]: string[];
+};
+
 export type StvEmoteSet = {
   id: string;
   name: string;
@@ -268,6 +292,10 @@ export type BadgeVersions = {
 };
 
 export type ParsedBadges = {
+  id: string;
   title: string;
+  slot?: number;
+  replaces?: string | null;
+  color?: string;
   images: string[];
 }[];
