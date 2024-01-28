@@ -13,7 +13,7 @@
 
 ## Demo
 
-Checkout this [demo app](#) to see emoteTTV in action! ⛹️
+Checkout this [demo app](https://emotettv.gitbook.io/emotettv/examples) to see emoteTTV in action! ⛹️
 
 ## Basic usage
 
@@ -46,7 +46,7 @@ client.on("message", async (channel, tags, text, self) => {
 
 ## Docs
 
-Check more examples and API reference on the [emoteTTV docs](#).
+Check more examples and API reference on the [emoteTTV docs](https://emotettv.gitbook.io).
 
 ## License
 
