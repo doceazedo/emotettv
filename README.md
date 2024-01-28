@@ -6,140 +6,47 @@
 [![snyk](https://snyk.io/test/npm/emotettv/badge.svg)](https://snyk.io/test/npm/emotettv)
 [![snyk](https://badgen.net/github/license/doceazedo/emotettv)](/LICENSE)
 
-- <img src="https://cdn.betterttv.net/emote/5fa8f232eca18f6455c2b2e1/1x" height="28" align="left"> Works with Twitch, BTTV and FFZ emotes
-- <img src="https://static-cdn.jtvnw.net/emoticons/v2/81274/default/dark/1.0" height="28" align="left"> Dead simple API - works seamlessly with <a href="https://github.com/tmijs/tmi.js">TMI.js</a>
-- <img src="https://static-cdn.jtvnw.net/emoticons/v2/304486301/default/dark/1.0" height="28" align="left"> Flexible results to fit every need
-
-> ### ⚠ This is still in development, breaking changes and bugs are expected until the 1.0.0 release.
+- <img src="https://cdn.betterttv.net/emote/5fa8f232eca18f6455c2b2e1/2x" height="28" align="left"> Supports Twitch, BTTV, FFZ and 7TV emotes and badges
+- <img src="https://cdn.7tv.app/emote/63071ba3449e6f5ff95cca6d/2x.webp" height="28" align="left"> Dead simple API — works seamlessly with <a href="https://github.com/tmijs/tmi.js">TMI.js</a> and <a href="https://twurple.js.org">Twurple</a>
+- <img src="https://static-cdn.jtvnw.net/emoticons/v2/81274/default/dark/2.0" height="28" align="left"> Works out of the box — no authentication needed
+- <img src="https://i.imgur.com/munRwdJ.png" height="28" align="left"> Flexible outputs to fit every need
 
 ## Demo
 
-Checkout this [demo app](https://codesandbox.io/s/6efhse?file=/src/index.js) to see emoteTTV in action ⛹️
-
-## Installation
-
-```bash
-npm install emotettv
-# or with yarn
-yarn add emotettv
-```
-
-```js
-import { parseBadges, parseEmotes } from 'emotettv';
-```
+Checkout this [demo app](https://emotettv.gitbook.io/emotettv/examples) to see emoteTTV in action! ⛹️
 
 ## Basic usage
 
-**🚨 Remember to always sanitize user messages! If your frontend library doesn't do that for you, I recommend using [DOMPurify](https://github.com/cure53/DOMPurify).**
+> [!WARNING]
+> Remember to _always_ sanitize user messages! If your frontend library doesn't do that for you, you can take a look at [DOMPurify](https://github.com/cure53/DOMPurify).
 
 ```js
-import tmi from 'tmi.js';
-import { parseBadges, parseEmotes } from 'emotettv';
+import { parseEmotes } from "emotettv";
 
-const channelId = '98776633';
-const client = new tmi.Client({
-  channels: ['doceazedo911'],
-});
-client.connect();
+const parsed = await parseEmotes("Hello emotettv! D:");
+console.log(parsed.toHTML());
+// > Hello emotettv! <figure><img src="..." alt="D:" /></figure>
+```
+
+If you're using [TMI.js](https://github.com/tmijs/tmi.js), you can pass your tags directly to emoteTTV:
+
+```js
+import { parseBadges, parseEmotes } from "emotettv";
+import tmi from "tmi.js";
 
 const options = {
-  channelId,
+  channelId: "98776633",
 };
 
-client.on('message', async (channel, tags, message) => {
-  const parsedMessage = await parseEmotes(message, tags.emotes, options);
-  const parsedBadges = await parseBadges(tags.badges, options);
-  const htmlMessage = parsedMessage.toHtml();
-  const htmlBadges = parsedBadges.toHtml();
-
-  document.body.innerHTML += `${htmlBadges} ${tags['display-name']}: ${htmlMessage}`;
+client.on("message", async (channel, tags, text, self) => {
+  const badges = await parseBadges(tags.badges, tags.username, options);
+  const message = await parseEmotes(text, tags.emotes, options);
 });
 ```
 
-## Methods
+## Docs
 
-### parseEmotes(...)
-
-**Parameters**
-
-- message: Message string to parse
-- emotes: List of emote positions, like tmi.js [`tags.emotes`](/src/badges/badges.types.ts#L1)
-- options: Optional parser settings
-  ```js
-  {
-    channelId: '', // Twitch ID of the channel the message is from
-    thirdPartyProviders: {
-      bttv: true, // Parse BTTV emotes
-      ffz: true, // Parse FFZ emotes
-    };
-    customEmotes: {
-      list: new Map(); // Map of <emote code, emote ID>
-      make: (code) => []; // Function that returns array of emote URLs
-    },
-  }
-  ```
-
-**Usage**
-
-```js
-const parsed = await parseEmotes(message, emotes, {
-  channelId: '98776633',
-});
-
-const html = parsed.toHtml();
-// hello world! <img src="..." alt="VoHiYo" />
-
-const words = parsed.toWords();
-// [
-//   { text: 'hello' },
-//   { text: 'world!' },
-//   { text: 'VoHiYo', emote: { url: ['1x', '2x', '3x'] } }
-// ]
-```
-
-### parseBadges(...)
-
-**Parameters**
-
-- badgesData: List of the user badges, like tmi.js [`tags.badges`](/src/badges/badges.types.ts#L28)
-- options: Optional parser settings
-  ```js
-  {
-    channelId: '', // Twitch ID of the channel the message is from
-  }
-  ```
-
-**Usage**
-
-```js
-const parsed = await parseBadges(badges, {
-  channelId: '98776633',
-});
-
-const html = parsed.toHtml();
-// <img src="..." alt="premium" /> <img src="..." alt="subscriber" />
-
-const minimal = parsed.toMinimalArray();
-// [
-//   [ '1x', '2x', '4x' ],
-//   [ '1x', '2x', '4x' ]
-// ]
-
-const basic = parsed.toBasicArray();
-// [
-//   { ... },
-//   { ... },
-// ]
-```
-
-## Building
-
-```bash
-git clone https://github.com/doceazedo/emotettv.git
-cd emotettv
-npm install # or yarn
-npm run build # or yarn build
-```
+Check more examples and API reference on the [emoteTTV docs](https://emotettv.gitbook.io).
 
 ## License
 

@@ -1,50 +1,37 @@
 {
   "name": "emotettv",
-  "version": "0.0.19",
-  "files": [
-    "dist"
-  ],
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/doceazedo/emotettv.git"
   },
-  "main": "./dist/index.js",
+  "homepage": "https://emotettv.gitbook.io",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "typings": "dist/index.d.ts",
-  "typescript": {
-    "definition": "dist/index.d.ts"
-  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "rollup -c",
-    "test": "jest",
-    "lint": "prettier --write src && eslint --fix src"
+    "dev": "tsc && vite build --watch",
+    "start": "vite --host",
+    "build": "tsc && vite build",
+    "build:types": "dts-bundle-generator --config ./dts-bundle-generator.config.ts",
+    "lint:scripts": "eslint . --ext .ts",
+    "format:scripts": "prettier . --write"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.0.2",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@types/jest": "^27.5.1",
-    "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.13.0",
-    "cheerio": "^1.0.0-rc.10",
-    "eslint": "^8.10.0",
-    "husky": "^8.0.1",
-    "jest": "^28.1.0",
-    "lint-staged": "^13.0.3",
-    "prettier": "2.5.1",
-    "rollup": "^2.70.0",
-    "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.31.2",
-    "ts-jest": "^28.0.2",
-    "typescript": "^4.6.2"
-  },
-  "dependencies": {
-    "cross-fetch": "^3.1.5"
-  },
-  "lint-staged": {
-    "*.{js,ts,svelte}": [
-      "eslint --cache --fix",
-      "prettier --write"
-    ]
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "dts-bundle-generator": "^9.2.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "^3.1.1",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11",
+    "vite-plugin-dts": "^3.7.0"
   }
 }
