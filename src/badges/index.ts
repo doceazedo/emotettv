@@ -46,7 +46,6 @@ export const parseBadges = async (
 };
 
 export const reloadBadges = async (
-  channelId: string | null,
   _options: Partial<ParserOptions> | null = null,
 ) => {
   const options = loadOptions(_options);
