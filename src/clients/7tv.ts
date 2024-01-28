@@ -21,7 +21,6 @@ export const get7tvChannelEmotes = async (
       channelId,
     }));
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -38,7 +37,6 @@ export const get7tvGlobalEmotes = async (): Promise<EmotesList> => {
       channelId: null,
     }));
   } catch (error) {
-    console.error(error);
     return [];
   }
 };

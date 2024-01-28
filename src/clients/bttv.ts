@@ -21,7 +21,6 @@ export const getBttvChannelEmotes = async (
       channelId,
     }));
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -37,7 +36,6 @@ export const getBttvGlobalEmotes = async (): Promise<EmotesList> => {
       channelId: null,
     }));
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -49,7 +47,6 @@ export const getBttvBadges = async () => {
     const data = (await resp.json()) as BttvBadgesResponse;
     return data;
   } catch (error) {
-    console.error(error);
     return [];
   }
 };

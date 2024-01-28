@@ -12,7 +12,6 @@ export const getTwitchChannelBadges = async (
     const data = (await resp.json()) as UnttvBadgesResponse;
     return formatTwitchBadgesList(data, channelId);
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -24,7 +23,6 @@ export const getTwitchGlobalBadges = async (): Promise<TwitchBadgesList> => {
     const data = (await resp.json()) as UnttvBadgesResponse;
     return formatTwitchBadgesList(data, null);
   } catch (error) {
-    console.error(error);
     return [];
   }
 };

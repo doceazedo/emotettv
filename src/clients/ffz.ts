@@ -25,7 +25,6 @@ export const getFfzChannelEmotes = async (
       )
       .flat();
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -45,7 +44,6 @@ export const getFfzGlobalEmotes = async (): Promise<EmotesList> => {
       )
       .flat();
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -57,7 +55,6 @@ export const getFfzBadges = async () => {
     const data = (await resp.json()) as FfzBadgesResponse;
     return data;
   } catch (error) {
-    console.error(error);
     return {
       badges: [],
       users: {},
