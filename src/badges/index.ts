@@ -1,3 +1,6 @@
+import { twitchBadgesParser } from "./twitch-badges";
+import { bttvBadgesParser } from "./bttv-badges";
+import { ffzBadgesParser } from "./ffz-badges";
 import { loadOptions } from "../utils/load-options";
 import type {
   BadgeVersions,
@@ -5,9 +8,6 @@ import type {
   ParsedBadges,
   ParserOptions,
 } from "../types";
-import { twitchBadgesParser } from "./twitch-badges";
-import { bttvBadgesParser } from "./bttv-badges";
-import { ffzBadgesParser } from "./ffz-badges";
 
 const badgeParsers: BadgesParser[] = [
   twitchBadgesParser,

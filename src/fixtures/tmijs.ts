@@ -36,6 +36,6 @@ export const tmijsMessageWithEmotes = {
     "message-type": "chat",
   },
   message:
-    "global VoHiYo channel sub doceazComfy animated sub dizzyLurk global bttv D: channel bttv catJAM global ffz ZreknarF channel ffz monkaEyes 7tv FeelsStrongMan PETPET RainTime SteerR Bedge",
+    'global VoHiYo channel sub doceazComfy animated sub dizzyLurk global bttv D: channel bttv catJAM global ffz ZreknarF channel ffz monkaEyes 7tv FeelsStrongMan PETPET RainTime SteerR Bedge <b>bold text!</b> <img src="https://i.imgur.com/N301cQg.png" />',
   self: false,
 };

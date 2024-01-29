@@ -3,6 +3,7 @@ import { bttvMessageParser } from "./bttv-emotes";
 import { ffzMessageParser } from "./ffz-emotes";
 import { stvMessageParser, stvOverlayParser } from "./7tv-emotes";
 import { loadOptions } from "../utils/load-options";
+import { escape } from "../utils/escape-html";
 import type {
   EmotePositions,
   EmotesParser,
@@ -37,10 +38,11 @@ export const parseEmotes = async (
 
   return {
     toArray: () => parsedMessage,
-    toHTML: (scale = 1, inlineStyles = true) =>
+    toHTML: (scale = 1, inlineStyles = true, escapeHTML = true) =>
       parsedMessage
         .map((message) => {
-          if (!message.emote) return message.content;
+          if (!message.emote)
+            return escapeHTML ? escape(message.content) : message.content;
           const emoteURL =
             message.emote.images?.[scale] || message.emote.images[0];
           const height = [24, 28, 32, 48][scale];
