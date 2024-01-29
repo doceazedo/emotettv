@@ -17,9 +17,6 @@ Checkout this [demo app](https://emotettv.gitbook.io/emotettv/examples) to see e
 
 ## Basic usage
 
-> [!WARNING]
-> Remember to _always_ sanitize user messages! If your frontend library doesn't do that for you, you can take a look at [DOMPurify](https://github.com/cure53/DOMPurify).
-
 ```js
 import { parseEmotes } from "emotettv";
 
@@ -34,10 +31,15 @@ If you're using [TMI.js](https://github.com/tmijs/tmi.js), you can pass your tag
 import { parseBadges, parseEmotes } from "emotettv";
 import tmi from "tmi.js";
 
+const client = new tmi.Client({
+  channels: ["doceazedo911"],
+});
+
 const options = {
   channelId: "98776633",
 };
 
+client.connect();
 client.on("message", async (channel, tags, text, self) => {
   const badges = await parseBadges(tags.badges, tags.username, options);
   const message = await parseEmotes(text, tags.emotes, options);
